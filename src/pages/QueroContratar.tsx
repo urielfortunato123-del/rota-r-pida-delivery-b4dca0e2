@@ -61,7 +61,7 @@ const QueroContratar = () => {
     <div className="min-h-screen pt-24 pb-16">
       <div className="container max-w-2xl">
         <div className="mb-10">
-          <h1 className="font-heading text-3xl md:text-4xl font-bold mb-3">
+          <h1 className="font-heading text-2xl sm:text-3xl md:text-4xl font-bold mb-3">
             Quero <span className="text-gradient">Contratar</span>
           </h1>
           <p className="text-muted-foreground">
@@ -69,7 +69,7 @@ const QueroContratar = () => {
           </p>
         </div>
 
-        <div className="glass rounded-2xl p-4 mb-6 flex gap-3 items-start border border-primary/30">
+        <div className="glass rounded-2xl p-3 sm:p-4 mb-6 flex gap-2 sm:gap-3 items-start border border-primary/30">
           <Info size={18} className="text-primary flex-shrink-0 mt-0.5" />
           <p className="text-sm text-muted-foreground">
             <span className="text-foreground font-semibold">Cadastro de empresa: R$ 50/mês.</span>{" "}
