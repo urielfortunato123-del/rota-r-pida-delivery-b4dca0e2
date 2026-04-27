@@ -6,10 +6,13 @@ import { Switch } from "@/components/ui/switch";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { ArrowRight, Info } from "lucide-react";
+import { useGeolocation } from "@/hooks/use-geolocation";
+import LocationButton from "@/components/LocationButton";
 
 const disponibilidades = ["Manhã", "Tarde", "Noite", "Madrugada", "Fim de semana", "Feriados"];
 
 const SouMotoboy = () => {
+  const geo = useGeolocation();
   const [form, setForm] = useState({
     nome: "",
     telefone: "",
@@ -19,6 +22,7 @@ const SouMotoboy = () => {
     moto: "",
     placa: "",
     bag: false,
+    raioKm: "",
     tipoPagamento: "",
     valorMinimo: "",
     horarioInicio: "",
@@ -43,10 +47,12 @@ const SouMotoboy = () => {
       `👤 *Nome:* ${form.nome}\n` +
       `📱 *Telefone:* ${form.telefone}\n` +
       `📍 *Cidade/Bairro:* ${form.cidade} - ${form.bairro}\n` +
-      `🪪 *CNH:* ${form.cnh || "Não informada"}\n\n` +
-      `🏍 *Moto:* ${form.moto}\n` +
+      `🪪 *CNH:* ${form.cnh || "Não informada"}\n` +
+      (geo.location ? `🗺 *Localização:* ${geo.location.mapsUrl}\n` : "") +
+      `\n🏍 *Moto:* ${form.moto}\n` +
       `🔢 *Placa:* ${form.placa || "Não informada"}\n` +
-      `🎒 *Bag térmica:* ${form.bag ? "Sim" : "Não"}\n\n` +
+      `🎒 *Bag térmica:* ${form.bag ? "Sim" : "Não"}\n` +
+      `📏 *Raio de atuação:* ${form.raioKm ? `${form.raioKm} km` : "Não informado"}\n\n` +
       `💰 *Forma de cobrança:* ${form.tipoPagamento}\n` +
       `💵 *Valor mínimo:* R$ ${form.valorMinimo}\n\n` +
       `⏰ *Horário:* ${form.horarioInicio} às ${form.horarioFim}\n` +
@@ -101,6 +107,11 @@ const SouMotoboy = () => {
                 <Input placeholder="Número da CNH" value={form.cnh} onChange={(e) => update("cnh", e.target.value)} className="bg-muted border-border" />
               </div>
             </div>
+            <div className="space-y-2">
+              <Label>Localização (opcional)</Label>
+              <LocationButton {...geo} onRequest={geo.requestLocation} onReset={geo.reset} />
+              <p className="text-xs text-muted-foreground">Ajuda o administrador a indicar você nas entregas mais próximas.</p>
+            </div>
           </div>
 
           {/* Moto */}
@@ -116,9 +127,15 @@ const SouMotoboy = () => {
                 <Input placeholder="ABC-1D23" value={form.placa} onChange={(e) => update("placa", e.target.value)} className="bg-muted border-border" />
               </div>
             </div>
-            <div className="flex items-center justify-between">
-              <Label>Possui bag térmica?</Label>
-              <Switch checked={form.bag} onCheckedChange={(v) => update("bag", v)} />
+            <div className="grid sm:grid-cols-2 gap-4">
+              <div className="flex items-center justify-between sm:col-span-1">
+                <Label>Possui bag térmica?</Label>
+                <Switch checked={form.bag} onCheckedChange={(v) => update("bag", v)} />
+              </div>
+              <div className="space-y-2">
+                <Label>Raio de atuação (km)</Label>
+                <Input type="number" min="1" max="100" placeholder="Ex: 10" value={form.raioKm} onChange={(e) => update("raioKm", e.target.value)} className="bg-muted border-border" />
+              </div>
             </div>
           </div>
 

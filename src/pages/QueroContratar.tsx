@@ -6,8 +6,12 @@ import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
 import { ArrowRight, Info } from "lucide-react";
+import { useGeolocation } from "@/hooks/use-geolocation";
+import LocationButton from "@/components/LocationButton";
 
 const QueroContratar = () => {
+  const geoEmpresa = useGeolocation();
+  const geoEntrega = useGeolocation();
   const [form, setForm] = useState({
     empresa: "",
     categoria: "",
@@ -39,9 +43,11 @@ const QueroContratar = () => {
       `👤 *Responsável:* ${form.responsavel}\n` +
       `📱 *Telefone:* ${form.telefone}\n` +
       `📍 *Cidade/Bairro:* ${form.cidade} - ${form.bairro}\n` +
-      `🏠 *Endereço:* ${form.endereco}\n\n` +
-      `📦 *Retirada:* ${form.retirada || "—"}\n` +
+      `🏠 *Endereço:* ${form.endereco}\n` +
+      (geoEmpresa.location ? `🗺 *Local da empresa:* ${geoEmpresa.location.mapsUrl}\n` : "") +
+      `\n📦 *Retirada:* ${form.retirada || "—"}\n` +
       `🎯 *Entrega:* ${form.entrega || "—"}\n` +
+      (geoEntrega.location ? `🗺 *Local da entrega:* ${geoEntrega.location.mapsUrl}\n` : "") +
       `🍽 *Tipo de pedido:* ${form.tipoPedido || "—"}\n\n` +
       `💰 *Forma de pagamento:* ${form.tipoPagamento}\n` +
       `💵 *Valor oferecido:* R$ ${form.valor}\n` +
@@ -121,6 +127,10 @@ const QueroContratar = () => {
                 <Label>Endereço completo</Label>
                 <Input required placeholder="Rua, número, complemento" value={form.endereco} onChange={(e) => update("endereco", e.target.value)} className="bg-muted border-border" />
               </div>
+              <div className="space-y-2 sm:col-span-2">
+                <Label>Localização da empresa (opcional)</Label>
+                <LocationButton {...geoEmpresa} onRequest={geoEmpresa.requestLocation} onReset={geoEmpresa.reset} label="Marcar local atual da empresa" />
+              </div>
             </div>
           </div>
 
@@ -159,6 +169,10 @@ const QueroContratar = () => {
               <div className="space-y-2">
                 <Label>Endereço de entrega</Label>
                 <Input placeholder="Rua, número, bairro" value={form.entrega} onChange={(e) => update("entrega", e.target.value)} className="bg-muted border-border" />
+              </div>
+              <div className="space-y-2">
+                <Label>Localização da entrega (opcional)</Label>
+                <LocationButton {...geoEntrega} onRequest={geoEntrega.requestLocation} onReset={geoEntrega.reset} label="Marcar local atual da entrega" />
               </div>
               <div className="space-y-2">
                 <Label>Tipo de pedido</Label>
