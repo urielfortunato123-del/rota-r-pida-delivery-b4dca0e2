@@ -17,7 +17,7 @@ const ComoFunciona = () => {
     <div className="min-h-screen pt-24 pb-16">
       <div className="container max-w-3xl">
         <div className="text-center mb-16">
-          <h1 className="font-heading text-3xl md:text-4xl font-bold mb-3">
+          <h1 className="font-heading text-2xl sm:text-3xl md:text-4xl font-bold mb-3">
             Como <span className="text-gradient">Funciona</span>
           </h1>
           <p className="text-muted-foreground text-lg max-w-xl mx-auto">

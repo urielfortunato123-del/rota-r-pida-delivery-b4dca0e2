@@ -61,7 +61,7 @@ const QueroContratar = () => {
     <div className="min-h-screen pt-24 pb-16">
       <div className="container max-w-2xl">
         <div className="mb-10">
-          <h1 className="font-heading text-3xl md:text-4xl font-bold mb-3">
+          <h1 className="font-heading text-2xl sm:text-3xl md:text-4xl font-bold mb-3">
             Quero <span className="text-gradient">Contratar</span>
           </h1>
           <p className="text-muted-foreground">
@@ -69,7 +69,7 @@ const QueroContratar = () => {
           </p>
         </div>
 
-        <div className="glass rounded-2xl p-4 mb-6 flex gap-3 items-start border border-primary/30">
+        <div className="glass rounded-2xl p-3 sm:p-4 mb-6 flex gap-2 sm:gap-3 items-start border border-primary/30">
           <Info size={18} className="text-primary flex-shrink-0 mt-0.5" />
           <p className="text-sm text-muted-foreground">
             <span className="text-foreground font-semibold">Cadastro de empresa: R$ 50/mês.</span>{" "}
@@ -79,8 +79,8 @@ const QueroContratar = () => {
 
         <form onSubmit={handleSubmit} className="space-y-8">
           {/* Empresa */}
-          <div className="glass rounded-2xl p-6 space-y-5 scroll-card">
-            <h2 className="font-heading text-lg font-semibold text-foreground">Dados da Empresa</h2>
+          <div className="glass rounded-2xl p-4 sm:p-6 space-y-4 sm:space-y-5 scroll-card">
+            <h2 className="font-heading text-base sm:text-lg font-semibold text-foreground">Dados da Empresa</h2>
             <div className="grid sm:grid-cols-2 gap-4">
               <div className="space-y-2">
                 <Label>Nome da empresa</Label>
@@ -135,8 +135,8 @@ const QueroContratar = () => {
           </div>
 
           {/* Pagamento */}
-          <div className="glass rounded-2xl p-6 space-y-5 scroll-card">
-            <h2 className="font-heading text-lg font-semibold text-foreground">Forma de Contratação</h2>
+          <div className="glass rounded-2xl p-4 sm:p-6 space-y-4 sm:space-y-5 scroll-card">
+            <h2 className="font-heading text-base sm:text-lg font-semibold text-foreground">Forma de Contratação</h2>
             <div className="grid sm:grid-cols-2 gap-4">
               <div className="space-y-2">
                 <Label>Tipo de pagamento</Label>
@@ -159,8 +159,8 @@ const QueroContratar = () => {
           </div>
 
           {/* Entrega (opcional) */}
-          <div className="glass rounded-2xl p-6 space-y-5 scroll-card">
-            <h2 className="font-heading text-lg font-semibold text-foreground">Detalhes da Entrega <span className="text-xs text-muted-foreground font-normal">(opcional)</span></h2>
+          <div className="glass rounded-2xl p-4 sm:p-6 space-y-4 sm:space-y-5 scroll-card">
+            <h2 className="font-heading text-base sm:text-lg font-semibold text-foreground">Detalhes da Entrega <span className="text-xs text-muted-foreground font-normal">(opcional)</span></h2>
             <div className="space-y-4">
               <div className="space-y-2">
                 <Label>Endereço de retirada</Label>

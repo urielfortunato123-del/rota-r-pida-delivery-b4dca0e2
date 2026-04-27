@@ -65,7 +65,7 @@ const SouMotoboy = () => {
     <div className="min-h-screen pt-24 pb-16">
       <div className="container max-w-2xl">
         <div className="mb-10">
-          <h1 className="font-heading text-3xl md:text-4xl font-bold mb-3">
+          <h1 className="font-heading text-2xl sm:text-3xl md:text-4xl font-bold mb-3">
             Sou <span className="text-gradient">Motoboy</span>
           </h1>
           <p className="text-muted-foreground">
@@ -73,7 +73,7 @@ const SouMotoboy = () => {
           </p>
         </div>
 
-        <div className="glass rounded-2xl p-4 mb-6 flex gap-3 items-start border border-primary/30">
+        <div className="glass rounded-2xl p-3 sm:p-4 mb-6 flex gap-2 sm:gap-3 items-start border border-primary/30">
           <Info size={18} className="text-primary flex-shrink-0 mt-0.5" />
           <p className="text-sm text-muted-foreground">
             <span className="text-foreground font-semibold">Ganhe R$ 25 por dia trabalhado por indicação.</span>{" "}
@@ -83,8 +83,8 @@ const SouMotoboy = () => {
 
         <form onSubmit={handleSubmit} className="space-y-8">
           {/* Dados pessoais */}
-          <div className="glass rounded-2xl p-6 space-y-5 scroll-card">
-            <h2 className="font-heading text-lg font-semibold text-foreground">Seus Dados</h2>
+          <div className="glass rounded-2xl p-4 sm:p-6 space-y-4 sm:space-y-5 scroll-card">
+            <h2 className="font-heading text-base sm:text-lg font-semibold text-foreground">Seus Dados</h2>
             <div className="grid sm:grid-cols-2 gap-4">
               <div className="space-y-2">
                 <Label>Nome completo</Label>
@@ -115,8 +115,8 @@ const SouMotoboy = () => {
           </div>
 
           {/* Moto */}
-          <div className="glass rounded-2xl p-6 space-y-5 scroll-card">
-            <h2 className="font-heading text-lg font-semibold text-foreground">Sua Moto</h2>
+          <div className="glass rounded-2xl p-4 sm:p-6 space-y-4 sm:space-y-5 scroll-card">
+            <h2 className="font-heading text-base sm:text-lg font-semibold text-foreground">Sua Moto</h2>
             <div className="grid sm:grid-cols-2 gap-4">
               <div className="space-y-2">
                 <Label>Modelo da moto</Label>
@@ -140,8 +140,8 @@ const SouMotoboy = () => {
           </div>
 
           {/* Valores */}
-          <div className="glass rounded-2xl p-6 space-y-5 scroll-card">
-            <h2 className="font-heading text-lg font-semibold text-foreground">Valores que você aceita</h2>
+          <div className="glass rounded-2xl p-4 sm:p-6 space-y-4 sm:space-y-5 scroll-card">
+            <h2 className="font-heading text-base sm:text-lg font-semibold text-foreground">Valores que você aceita</h2>
             <div className="grid sm:grid-cols-2 gap-4">
               <div className="space-y-2">
                 <Label>Forma de cobrança</Label>
@@ -164,8 +164,8 @@ const SouMotoboy = () => {
           </div>
 
           {/* Disponibilidade */}
-          <div className="glass rounded-2xl p-6 space-y-5 scroll-card">
-            <h2 className="font-heading text-lg font-semibold text-foreground">Disponibilidade</h2>
+          <div className="glass rounded-2xl p-4 sm:p-6 space-y-4 sm:space-y-5 scroll-card">
+            <h2 className="font-heading text-base sm:text-lg font-semibold text-foreground">Disponibilidade</h2>
             <div className="grid sm:grid-cols-2 gap-4">
               <div className="space-y-2">
                 <Label>Início (ex: 08:00)</Label>
