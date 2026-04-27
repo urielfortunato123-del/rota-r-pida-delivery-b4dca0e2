@@ -81,7 +81,7 @@ const QueroContratar = () => {
           {/* Empresa */}
           <div className="glass rounded-2xl p-4 sm:p-6 space-y-4 sm:space-y-5 scroll-card">
             <h2 className="font-heading text-base sm:text-lg font-semibold text-foreground">Dados da Empresa</h2>
-            <div className="grid sm:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="space-y-2">
                 <Label>Nome da empresa</Label>
                 <Input required placeholder="Ex: Pizzaria Bella" value={form.empresa} onChange={(e) => update("empresa", e.target.value)} className="bg-muted border-border" />
@@ -137,7 +137,7 @@ const QueroContratar = () => {
           {/* Pagamento */}
           <div className="glass rounded-2xl p-4 sm:p-6 space-y-4 sm:space-y-5 scroll-card">
             <h2 className="font-heading text-base sm:text-lg font-semibold text-foreground">Forma de Contratação</h2>
-            <div className="grid sm:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="space-y-2">
                 <Label>Tipo de pagamento</Label>
                 <Select required onValueChange={(v) => update("tipoPagamento", v)}>
