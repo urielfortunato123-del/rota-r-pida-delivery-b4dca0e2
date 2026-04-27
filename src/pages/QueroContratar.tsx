@@ -127,6 +127,10 @@ const QueroContratar = () => {
                 <Label>Endereço completo</Label>
                 <Input required placeholder="Rua, número, complemento" value={form.endereco} onChange={(e) => update("endereco", e.target.value)} className="bg-muted border-border" />
               </div>
+              <div className="space-y-2 sm:col-span-2">
+                <Label>Localização da empresa (opcional)</Label>
+                <LocationButton {...geoEmpresa} onRequest={geoEmpresa.requestLocation} onReset={geoEmpresa.reset} label="Marcar local atual da empresa" />
+              </div>
             </div>
           </div>
 
@@ -165,6 +169,10 @@ const QueroContratar = () => {
               <div className="space-y-2">
                 <Label>Endereço de entrega</Label>
                 <Input placeholder="Rua, número, bairro" value={form.entrega} onChange={(e) => update("entrega", e.target.value)} className="bg-muted border-border" />
+              </div>
+              <div className="space-y-2">
+                <Label>Localização da entrega (opcional)</Label>
+                <LocationButton {...geoEntrega} onRequest={geoEntrega.requestLocation} onReset={geoEntrega.reset} label="Marcar local atual da entrega" />
               </div>
               <div className="space-y-2">
                 <Label>Tipo de pedido</Label>
