@@ -26,14 +26,14 @@ const LocationButton = ({ location, loading, error, onRequest, onReset, label = 
           {loading ? "Obtendo localização..." : label}
         </Button>
       ) : (
-        <div className="flex items-center justify-between gap-3 p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/40">
-          <div className="flex items-center gap-2 min-w-0">
+        <div className="flex items-center justify-between gap-2 p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/40 w-full max-w-full overflow-hidden">
+          <div className="flex items-center gap-2 min-w-0 flex-1">
             <Check size={16} className="text-emerald-500 flex-shrink-0" />
-            <span className="text-sm truncate text-emerald-50">
-              Localização capturada ({location.lat.toFixed(4)}, {location.lng.toFixed(4)})
+            <span className="text-xs sm:text-sm truncate text-emerald-50 min-w-0">
+              Localização capturada
             </span>
           </div>
-          <Button type="button" variant="ghost" size="sm" onClick={onReset} className="flex-shrink-0">
+          <Button type="button" variant="ghost" size="sm" onClick={onReset} className="flex-shrink-0 h-8 w-8 p-0">
             <X size={14} />
           </Button>
         </div>
