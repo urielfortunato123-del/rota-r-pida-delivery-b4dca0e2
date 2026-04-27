@@ -77,7 +77,7 @@ const QueroContratar = () => {
           </p>
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-8">
+        <form onSubmit={handleSubmit} className="space-y-6 sm:space-y-8 form-compact">
           {/* Empresa */}
           <div className="glass rounded-2xl p-4 sm:p-6 space-y-4 sm:space-y-5 scroll-card">
             <h2 className="font-heading text-base sm:text-lg font-semibold text-foreground">Dados da Empresa</h2>
