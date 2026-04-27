@@ -96,4 +96,37 @@
       overflow: visible;
     }
   }
+
+  /* Modo compacto: ativado em telas pequenas via .form-compact no <form> */
+  @media (max-width: 640px) {
+    .form-compact .glass {
+      @apply p-3 rounded-xl;
+    }
+    .form-compact .space-y-5 > * + *,
+    .form-compact .space-y-4 > * + * {
+      margin-top: 0.625rem !important;
+    }
+    .form-compact .gap-4 {
+      gap: 0.625rem !important;
+    }
+    .form-compact h2 {
+      font-size: 0.9rem !important;
+      margin-bottom: 0.25rem !important;
+    }
+    .form-compact label {
+      font-size: 0.75rem !important;
+    }
+    .form-compact input,
+    .form-compact [role="combobox"] {
+      height: 2.25rem !important;
+      font-size: 0.875rem !important;
+    }
+    .form-compact textarea {
+      min-height: 60px !important;
+      font-size: 0.875rem !important;
+    }
+    .form-compact .compact-hide {
+      display: none !important;
+    }
+  }
 }

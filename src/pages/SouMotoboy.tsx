@@ -81,7 +81,7 @@ const SouMotoboy = () => {
           </p>
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-8">
+        <form onSubmit={handleSubmit} className="space-y-6 sm:space-y-8 form-compact">
           {/* Dados pessoais */}
           <div className="glass rounded-2xl p-4 sm:p-6 space-y-4 sm:space-y-5 scroll-card">
             <h2 className="font-heading text-base sm:text-lg font-semibold text-foreground">Seus Dados</h2>
@@ -102,7 +102,7 @@ const SouMotoboy = () => {
                 <Label>Bairro</Label>
                 <Input required placeholder="Centro" value={form.bairro} onChange={(e) => update("bairro", e.target.value)} className="bg-muted border-border" />
               </div>
-              <div className="space-y-2 sm:col-span-2">
+              <div className="space-y-2 sm:col-span-2 compact-hide">
                 <Label>CNH (categoria A)</Label>
                 <Input placeholder="Número da CNH" value={form.cnh} onChange={(e) => update("cnh", e.target.value)} className="bg-muted border-border" />
               </div>
@@ -110,7 +110,7 @@ const SouMotoboy = () => {
             <div className="space-y-2">
               <Label>Localização (opcional)</Label>
               <LocationButton {...geo} onRequest={geo.requestLocation} onReset={geo.reset} />
-              <p className="text-xs text-muted-foreground">Ajuda o administrador a indicar você nas entregas mais próximas.</p>
+              <p className="text-xs text-muted-foreground compact-hide">Ajuda o administrador a indicar você nas entregas mais próximas.</p>
             </div>
           </div>
 
@@ -122,7 +122,7 @@ const SouMotoboy = () => {
                 <Label>Modelo da moto</Label>
                 <Input required placeholder="Ex: Honda CG 160" value={form.moto} onChange={(e) => update("moto", e.target.value)} className="bg-muted border-border" />
               </div>
-              <div className="space-y-2">
+              <div className="space-y-2 compact-hide">
                 <Label>Placa</Label>
                 <Input placeholder="ABC-1D23" value={form.placa} onChange={(e) => update("placa", e.target.value)} className="bg-muted border-border" />
               </div>
