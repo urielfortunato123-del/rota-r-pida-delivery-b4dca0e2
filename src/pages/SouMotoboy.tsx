@@ -127,9 +127,9 @@ const SouMotoboy = () => {
                 <Input placeholder="ABC-1D23" value={form.placa} onChange={(e) => update("placa", e.target.value)} className="bg-muted border-border" />
               </div>
             </div>
-            <div className="grid sm:grid-cols-2 gap-4">
-              <div className="flex items-center justify-between sm:col-span-1">
-                <Label>Possui bag térmica?</Label>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 items-end">
+              <div className="flex items-center justify-between p-3 rounded-xl bg-muted/40 border border-border h-[42px]">
+                <Label className="mb-0">Possui bag térmica?</Label>
                 <Switch checked={form.bag} onCheckedChange={(v) => update("bag", v)} />
               </div>
               <div className="space-y-2">
