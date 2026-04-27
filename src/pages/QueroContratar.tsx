@@ -103,7 +103,7 @@ const QueroContratar = () => {
                   </SelectContent>
                 </Select>
               </div>
-              <div className="space-y-2">
+              <div className="space-y-2 compact-hide">
                 <Label>CNPJ (opcional)</Label>
                 <Input placeholder="00.000.000/0000-00" value={form.cnpj} onChange={(e) => update("cnpj", e.target.value)} className="bg-muted border-border" />
               </div>
