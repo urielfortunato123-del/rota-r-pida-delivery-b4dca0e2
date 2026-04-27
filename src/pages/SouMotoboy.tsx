@@ -85,7 +85,7 @@ const SouMotoboy = () => {
           {/* Dados pessoais */}
           <div className="glass rounded-2xl p-4 sm:p-6 space-y-4 sm:space-y-5 scroll-card">
             <h2 className="font-heading text-base sm:text-lg font-semibold text-foreground">Seus Dados</h2>
-            <div className="grid sm:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="space-y-2">
                 <Label>Nome completo</Label>
                 <Input required placeholder="João Silva" value={form.nome} onChange={(e) => update("nome", e.target.value)} className="bg-muted border-border" />
@@ -117,7 +117,7 @@ const SouMotoboy = () => {
           {/* Moto */}
           <div className="glass rounded-2xl p-4 sm:p-6 space-y-4 sm:space-y-5 scroll-card">
             <h2 className="font-heading text-base sm:text-lg font-semibold text-foreground">Sua Moto</h2>
-            <div className="grid sm:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="space-y-2">
                 <Label>Modelo da moto</Label>
                 <Input required placeholder="Ex: Honda CG 160" value={form.moto} onChange={(e) => update("moto", e.target.value)} className="bg-muted border-border" />
@@ -142,7 +142,7 @@ const SouMotoboy = () => {
           {/* Valores */}
           <div className="glass rounded-2xl p-4 sm:p-6 space-y-4 sm:space-y-5 scroll-card">
             <h2 className="font-heading text-base sm:text-lg font-semibold text-foreground">Valores que você aceita</h2>
-            <div className="grid sm:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="space-y-2">
                 <Label>Forma de cobrança</Label>
                 <Select required onValueChange={(v) => update("tipoPagamento", v)}>
@@ -166,7 +166,7 @@ const SouMotoboy = () => {
           {/* Disponibilidade */}
           <div className="glass rounded-2xl p-4 sm:p-6 space-y-4 sm:space-y-5 scroll-card">
             <h2 className="font-heading text-base sm:text-lg font-semibold text-foreground">Disponibilidade</h2>
-            <div className="grid sm:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="space-y-2">
                 <Label>Início (ex: 08:00)</Label>
                 <Input required type="time" value={form.horarioInicio} onChange={(e) => update("horarioInicio", e.target.value)} className="bg-muted border-border" />
