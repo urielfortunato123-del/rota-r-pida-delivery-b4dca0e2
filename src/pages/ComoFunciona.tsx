@@ -1,10 +1,15 @@
-import { ClipboardList, Send, MapPin, CheckCircle } from "lucide-react";
+import { ClipboardList, Send, MapPin, CheckCircle, Building2, Bike } from "lucide-react";
 
 const steps = [
-  { icon: ClipboardList, title: "Preencha o formulário", desc: "Informe os dados do restaurante e da entrega." },
-  { icon: Send, title: "Pedido enviado no WhatsApp", desc: "O pedido é enviado automaticamente via WhatsApp." },
-  { icon: MapPin, title: "Motoboy mais próximo aceita", desc: "Um motoboy disponível na região aceita sua corrida." },
-  { icon: CheckCircle, title: "Entrega realizada", desc: "Pedido entregue com rapidez e segurança." },
+  { icon: ClipboardList, title: "Cadastro da empresa", desc: "Farmácia, pizzaria, restaurante ou padaria preenche o cadastro completo." },
+  { icon: Send, title: "Envio automático no WhatsApp", desc: "O cadastro é encaminhado direto ao administrador via WhatsApp." },
+  { icon: MapPin, title: "Motoboy mais próximo é indicado", desc: "Consultamos nosso banco de motoboys e indicamos o ideal pela disponibilidade e zona." },
+  { icon: CheckCircle, title: "Entrega realizada", desc: "Serviço executado com rapidez. Sem marketplace, sem complicação." },
+];
+
+const planos = [
+  { icon: Building2, title: "Empresas", price: "R$ 50", period: "/mês", desc: "Cadastro mensal com acesso à rede de motoboys e indicações ilimitadas." },
+  { icon: Bike, title: "Motoboys", price: "R$ 25", period: "/dia", desc: "Você recebe R$ 25 por dia trabalhado, por indicação aceita." },
 ];
 
 const ComoFunciona = () => {
@@ -41,6 +46,26 @@ const ComoFunciona = () => {
               </div>
             </div>
           ))}
+        </div>
+
+        {/* Planos / valores */}
+        <div className="mt-12">
+          <h2 className="font-heading text-2xl font-bold text-center mb-6">💰 Valores</h2>
+          <div className="grid sm:grid-cols-2 gap-4">
+            {planos.map((p, i) => (
+              <div key={i} className="glass rounded-2xl p-6">
+                <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mb-4">
+                  <p.icon size={24} className="text-primary" />
+                </div>
+                <h3 className="font-heading text-lg font-semibold mb-2">{p.title}</h3>
+                <div className="flex items-baseline gap-1 mb-3">
+                  <span className="font-heading text-3xl font-bold text-primary">{p.price}</span>
+                  <span className="text-muted-foreground text-sm">{p.period}</span>
+                </div>
+                <p className="text-sm text-muted-foreground">{p.desc}</p>
+              </div>
+            ))}
+          </div>
         </div>
 
         <div className="glass rounded-2xl p-8 mt-12 text-center">
