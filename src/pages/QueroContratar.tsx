@@ -71,7 +71,7 @@ const QueroContratar = () => {
 
         <div className="glass rounded-2xl p-3 sm:p-4 mb-6 flex gap-2 sm:gap-3 items-start border border-primary/30">
           <Info size={18} className="text-primary flex-shrink-0 mt-0.5" />
-          <p className="text-sm text-muted-foreground">
+          <p className="text-sm text-muted-foreground break-words min-w-0">
             <span className="text-foreground font-semibold">Cadastro de empresa: R$ 50/mês.</span>{" "}
             Inclui acesso à nossa rede de motoboys, indicação ilimitada e suporte via WhatsApp.
           </p>
