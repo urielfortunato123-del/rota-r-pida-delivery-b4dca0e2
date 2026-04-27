@@ -6,10 +6,13 @@ import { Switch } from "@/components/ui/switch";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { ArrowRight, Info } from "lucide-react";
+import { useGeolocation } from "@/hooks/use-geolocation";
+import LocationButton from "@/components/LocationButton";
 
 const disponibilidades = ["Manhã", "Tarde", "Noite", "Madrugada", "Fim de semana", "Feriados"];
 
 const SouMotoboy = () => {
+  const geo = useGeolocation();
   const [form, setForm] = useState({
     nome: "",
     telefone: "",
@@ -19,6 +22,7 @@ const SouMotoboy = () => {
     moto: "",
     placa: "",
     bag: false,
+    raioKm: "",
     tipoPagamento: "",
     valorMinimo: "",
     horarioInicio: "",
@@ -43,10 +47,12 @@ const SouMotoboy = () => {
       `👤 *Nome:* ${form.nome}\n` +
       `📱 *Telefone:* ${form.telefone}\n` +
       `📍 *Cidade/Bairro:* ${form.cidade} - ${form.bairro}\n` +
-      `🪪 *CNH:* ${form.cnh || "Não informada"}\n\n` +
-      `🏍 *Moto:* ${form.moto}\n` +
+      `🪪 *CNH:* ${form.cnh || "Não informada"}\n` +
+      (geo.location ? `🗺 *Localização:* ${geo.location.mapsUrl}\n` : "") +
+      `\n🏍 *Moto:* ${form.moto}\n` +
       `🔢 *Placa:* ${form.placa || "Não informada"}\n` +
-      `🎒 *Bag térmica:* ${form.bag ? "Sim" : "Não"}\n\n` +
+      `🎒 *Bag térmica:* ${form.bag ? "Sim" : "Não"}\n` +
+      `📏 *Raio de atuação:* ${form.raioKm ? `${form.raioKm} km` : "Não informado"}\n\n` +
       `💰 *Forma de cobrança:* ${form.tipoPagamento}\n` +
       `💵 *Valor mínimo:* R$ ${form.valorMinimo}\n\n` +
       `⏰ *Horário:* ${form.horarioInicio} às ${form.horarioFim}\n` +
