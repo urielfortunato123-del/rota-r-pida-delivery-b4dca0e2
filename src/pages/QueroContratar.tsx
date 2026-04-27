@@ -79,7 +79,7 @@ const QueroContratar = () => {
 
         <form onSubmit={handleSubmit} className="space-y-8">
           {/* Empresa */}
-          <div className="glass rounded-2xl p-6 space-y-5">
+          <div className="glass rounded-2xl p-6 space-y-5 scroll-card">
             <h2 className="font-heading text-lg font-semibold text-foreground">Dados da Empresa</h2>
             <div className="grid sm:grid-cols-2 gap-4">
               <div className="space-y-2">
@@ -135,7 +135,7 @@ const QueroContratar = () => {
           </div>
 
           {/* Pagamento */}
-          <div className="glass rounded-2xl p-6 space-y-5">
+          <div className="glass rounded-2xl p-6 space-y-5 scroll-card">
             <h2 className="font-heading text-lg font-semibold text-foreground">Forma de Contratação</h2>
             <div className="grid sm:grid-cols-2 gap-4">
               <div className="space-y-2">
@@ -159,7 +159,7 @@ const QueroContratar = () => {
           </div>
 
           {/* Entrega (opcional) */}
-          <div className="glass rounded-2xl p-6 space-y-5">
+          <div className="glass rounded-2xl p-6 space-y-5 scroll-card">
             <h2 className="font-heading text-lg font-semibold text-foreground">Detalhes da Entrega <span className="text-xs text-muted-foreground font-normal">(opcional)</span></h2>
             <div className="space-y-4">
               <div className="space-y-2">
