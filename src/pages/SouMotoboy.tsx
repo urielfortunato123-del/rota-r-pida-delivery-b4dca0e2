@@ -107,6 +107,11 @@ const SouMotoboy = () => {
                 <Input placeholder="Número da CNH" value={form.cnh} onChange={(e) => update("cnh", e.target.value)} className="bg-muted border-border" />
               </div>
             </div>
+            <div className="space-y-2">
+              <Label>Localização (opcional)</Label>
+              <LocationButton {...geo} onRequest={geo.requestLocation} onReset={geo.reset} />
+              <p className="text-xs text-muted-foreground">Ajuda o administrador a indicar você nas entregas mais próximas.</p>
+            </div>
           </div>
 
           {/* Moto */}
@@ -122,9 +127,15 @@ const SouMotoboy = () => {
                 <Input placeholder="ABC-1D23" value={form.placa} onChange={(e) => update("placa", e.target.value)} className="bg-muted border-border" />
               </div>
             </div>
-            <div className="flex items-center justify-between">
-              <Label>Possui bag térmica?</Label>
-              <Switch checked={form.bag} onCheckedChange={(v) => update("bag", v)} />
+            <div className="grid sm:grid-cols-2 gap-4">
+              <div className="flex items-center justify-between sm:col-span-1">
+                <Label>Possui bag térmica?</Label>
+                <Switch checked={form.bag} onCheckedChange={(v) => update("bag", v)} />
+              </div>
+              <div className="space-y-2">
+                <Label>Raio de atuação (km)</Label>
+                <Input type="number" min="1" max="100" placeholder="Ex: 10" value={form.raioKm} onChange={(e) => update("raioKm", e.target.value)} className="bg-muted border-border" />
+              </div>
             </div>
           </div>
 
