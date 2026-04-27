@@ -20,10 +20,10 @@ const LocationButton = ({ location, loading, error, onRequest, onReset, label = 
           variant="outline"
           onClick={onRequest}
           disabled={loading}
-          className="w-full border-border bg-muted/50 hover:bg-muted gap-2"
+          className="w-full border-border bg-muted/50 hover:bg-muted gap-2 min-w-0"
         >
-          {loading ? <Loader2 size={16} className="animate-spin" /> : <MapPin size={16} className="text-primary" />}
-          {loading ? "Obtendo localização..." : label}
+          {loading ? <Loader2 size={16} className="animate-spin flex-shrink-0" /> : <MapPin size={16} className="text-primary flex-shrink-0" />}
+          <span className="truncate min-w-0">{loading ? "Obtendo localização..." : label}</span>
         </Button>
       ) : (
         <div className="flex items-center justify-between gap-2 p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/40 w-full max-w-full overflow-hidden">
@@ -38,7 +38,7 @@ const LocationButton = ({ location, loading, error, onRequest, onReset, label = 
           </Button>
         </div>
       )}
-      {error && <p className="text-xs text-destructive">{error}</p>}
+      {error && <p className="text-xs text-destructive break-words">{error}</p>}
     </div>
   );
 };
