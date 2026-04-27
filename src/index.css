@@ -78,4 +78,22 @@
   .glass {
     @apply bg-card/60 backdrop-blur-xl border border-border/50;
   }
+
+  /* Limita a altura de blocos altos no mobile e adiciona scroll interno */
+  .scroll-card {
+    @apply max-h-[70vh] overflow-y-auto overscroll-contain;
+    scrollbar-width: thin;
+  }
+  .scroll-card::-webkit-scrollbar {
+    width: 6px;
+  }
+  .scroll-card::-webkit-scrollbar-thumb {
+    @apply bg-border rounded-full;
+  }
+  @screen md {
+    .scroll-card {
+      max-height: none;
+      overflow: visible;
+    }
+  }
 }

@@ -83,7 +83,7 @@ const SouMotoboy = () => {
 
         <form onSubmit={handleSubmit} className="space-y-8">
           {/* Dados pessoais */}
-          <div className="glass rounded-2xl p-6 space-y-5">
+          <div className="glass rounded-2xl p-6 space-y-5 scroll-card">
             <h2 className="font-heading text-lg font-semibold text-foreground">Seus Dados</h2>
             <div className="grid sm:grid-cols-2 gap-4">
               <div className="space-y-2">
@@ -115,7 +115,7 @@ const SouMotoboy = () => {
           </div>
 
           {/* Moto */}
-          <div className="glass rounded-2xl p-6 space-y-5">
+          <div className="glass rounded-2xl p-6 space-y-5 scroll-card">
             <h2 className="font-heading text-lg font-semibold text-foreground">Sua Moto</h2>
             <div className="grid sm:grid-cols-2 gap-4">
               <div className="space-y-2">
@@ -140,7 +140,7 @@ const SouMotoboy = () => {
           </div>
 
           {/* Valores */}
-          <div className="glass rounded-2xl p-6 space-y-5">
+          <div className="glass rounded-2xl p-6 space-y-5 scroll-card">
             <h2 className="font-heading text-lg font-semibold text-foreground">Valores que você aceita</h2>
             <div className="grid sm:grid-cols-2 gap-4">
               <div className="space-y-2">
@@ -164,7 +164,7 @@ const SouMotoboy = () => {
           </div>
 
           {/* Disponibilidade */}
-          <div className="glass rounded-2xl p-6 space-y-5">
+          <div className="glass rounded-2xl p-6 space-y-5 scroll-card">
             <h2 className="font-heading text-lg font-semibold text-foreground">Disponibilidade</h2>
             <div className="grid sm:grid-cols-2 gap-4">
               <div className="space-y-2">
