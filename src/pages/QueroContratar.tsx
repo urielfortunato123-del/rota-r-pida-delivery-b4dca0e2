@@ -43,9 +43,11 @@ const QueroContratar = () => {
       `👤 *Responsável:* ${form.responsavel}\n` +
       `📱 *Telefone:* ${form.telefone}\n` +
       `📍 *Cidade/Bairro:* ${form.cidade} - ${form.bairro}\n` +
-      `🏠 *Endereço:* ${form.endereco}\n\n` +
-      `📦 *Retirada:* ${form.retirada || "—"}\n` +
+      `🏠 *Endereço:* ${form.endereco}\n` +
+      (geoEmpresa.location ? `🗺 *Local da empresa:* ${geoEmpresa.location.mapsUrl}\n` : "") +
+      `\n📦 *Retirada:* ${form.retirada || "—"}\n` +
       `🎯 *Entrega:* ${form.entrega || "—"}\n` +
+      (geoEntrega.location ? `🗺 *Local da entrega:* ${geoEntrega.location.mapsUrl}\n` : "") +
       `🍽 *Tipo de pedido:* ${form.tipoPedido || "—"}\n\n` +
       `💰 *Forma de pagamento:* ${form.tipoPagamento}\n` +
       `💵 *Valor oferecido:* R$ ${form.valor}\n` +
