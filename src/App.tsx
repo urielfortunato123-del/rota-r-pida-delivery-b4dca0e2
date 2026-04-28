@@ -10,6 +10,8 @@ import QueroContratar from "./pages/QueroContratar";
 import SouMotoboy from "./pages/SouMotoboy";
 import ComoFunciona from "./pages/ComoFunciona";
 import Analytics from "./pages/Analytics";
+import Privacidade from "./pages/Privacidade";
+import Termos from "./pages/Termos";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
