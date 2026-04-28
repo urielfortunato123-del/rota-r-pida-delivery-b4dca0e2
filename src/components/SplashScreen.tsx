@@ -18,6 +18,8 @@ const SplashScreen = () => {
   const [fading, setFading] = useState(false);
 
   useEffect(() => {
+    if (!visible) return;
+    try { sessionStorage.setItem(STORAGE_KEY, "1"); } catch { /* ignore */ }
     const startedAt = performance.now();
     let hideTimer: number | undefined;
     let fadeTimer: number | undefined;
