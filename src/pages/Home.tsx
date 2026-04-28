@@ -3,6 +3,7 @@ import { Bike, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import InviteButton from "@/components/InviteButton";
 import WhatsappShareButton from "@/components/WhatsappShareButton";
+import LanguageSwitcher from "@/components/LanguageSwitcher";
 
 const Home = () => {
   return (
@@ -124,6 +125,9 @@ const Home = () => {
                 </span>
               </p>
             </div>
+
+            {/* Language switcher */}
+            <LanguageSwitcher />
           </div>
         </div>
       </footer>
