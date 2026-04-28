@@ -6,6 +6,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { LocaleProvider } from "@/lib/locale";
 import Navbar from "@/components/Navbar";
 import ScrollToTop from "@/components/ScrollToTop";
+import SplashScreen from "@/components/SplashScreen";
 import Home from "./pages/Home";
 import QueroContratar from "./pages/QueroContratar";
 import SouMotoboy from "./pages/SouMotoboy";
@@ -22,6 +23,7 @@ const App = () => (
   <QueryClientProvider client={queryClient}>
     <LocaleProvider>
       <TooltipProvider>
+        <SplashScreen />
         <Toaster />
         <Sonner />
         <BrowserRouter>
