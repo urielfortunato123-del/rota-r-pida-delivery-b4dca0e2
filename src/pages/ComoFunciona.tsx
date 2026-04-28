@@ -15,6 +15,14 @@ import {
   ArrowRight,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { trackEvent } from "@/lib/analytics";
+
+const handleCtaClick = (label: "contratar" | "motoboy", origin: string) => {
+  trackEvent("cta_click", {
+    label: `${label}:${origin}`,
+    page: "/como-funciona",
+  });
+};
 
 const empresaSteps = [
   {
@@ -151,7 +159,7 @@ const ComoFunciona = () => {
 
           <div className="mt-5 text-center">
             <Button asChild size="sm" className="rounded-xl">
-              <Link to="/contratar">
+              <Link to="/contratar" onClick={() => handleCtaClick("contratar", "section_empresa")}>
                 Quero contratar
                 <ArrowRight size={14} className="ml-1" />
               </Link>
@@ -195,7 +203,7 @@ const ComoFunciona = () => {
 
           <div className="mt-5 text-center">
             <Button asChild size="sm" variant="outline" className="rounded-xl">
-              <Link to="/motoboy">
+              <Link to="/motoboy" onClick={() => handleCtaClick("motoboy", "section_motoboy")}>
                 Sou motoboy
                 <ArrowRight size={14} className="ml-1" />
               </Link>
@@ -272,7 +280,7 @@ const ComoFunciona = () => {
             size="sm"
             className="flex-1 rounded-xl glow-red font-semibold text-xs h-11"
           >
-            <Link to="/contratar">🔴 Quero contratar</Link>
+            <Link to="/contratar" onClick={() => handleCtaClick("contratar", "floating_bar")}>🔴 Quero contratar</Link>
           </Button>
           <Button
             asChild
@@ -280,7 +288,7 @@ const ComoFunciona = () => {
             variant="outline"
             className="flex-1 rounded-xl font-semibold text-xs h-11"
           >
-            <Link to="/motoboy">⚫ Sou motoboy</Link>
+            <Link to="/motoboy" onClick={() => handleCtaClick("motoboy", "floating_bar")}>⚫ Sou motoboy</Link>
           </Button>
         </div>
       </div>
