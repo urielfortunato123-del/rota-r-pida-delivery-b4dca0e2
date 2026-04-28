@@ -240,7 +240,7 @@ const SouMotoboy = () => {
                 <Input id="bairro" data-field="bairro" maxLength={80} aria-invalid={!!errors.bairro} placeholder="Centro" value={form.bairro} onChange={(e) => update("bairro", e.target.value)} className="bg-muted border-border" />
                 <FieldError name="bairro" />
               </div>
-              <div className="space-y-2 sm:col-span-2 compact-hide">
+              <div className="space-y-2 sm:col-span-2">
                 <Label htmlFor="cnh">CNH (categoria A)</Label>
                 <Input id="cnh" data-field="cnh" maxLength={20} aria-invalid={!!errors.cnh} placeholder="Número da CNH" value={form.cnh} onChange={(e) => update("cnh", e.target.value)} className="bg-muted border-border" />
                 <FieldError name="cnh" />
