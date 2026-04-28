@@ -13,6 +13,7 @@ import ComoFunciona from "./pages/ComoFunciona";
 import Analytics from "./pages/Analytics";
 import Privacidade from "./pages/Privacidade";
 import Termos from "./pages/Termos";
+import GithubStatus from "./pages/GithubStatus";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -38,6 +39,7 @@ const App = () => (
               <Route path="/analytics" element={<Analytics />} />
               <Route path="/privacidade" element={<Privacidade />} />
               <Route path="/termos" element={<Termos />} />
+              <Route path="/github-status" element={<GithubStatus />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </main>
