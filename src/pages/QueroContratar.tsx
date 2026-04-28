@@ -126,19 +126,20 @@ const QueroContratar = () => {
           </p>
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-6 sm:space-y-8 form-compact">
+        <form onSubmit={handleSubmit} noValidate className="space-y-6 sm:space-y-8 form-compact">
           {/* Empresa */}
           <div className="glass rounded-2xl p-4 sm:p-6 space-y-4 sm:space-y-5 scroll-card">
             <h2 className="font-heading text-base sm:text-lg font-semibold text-foreground">Dados da Empresa</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="space-y-2">
-                <Label>Nome da empresa</Label>
-                <Input required placeholder="Ex: Pizzaria Bella" value={form.empresa} onChange={(e) => update("empresa", e.target.value)} className="bg-muted border-border" />
+                <Label htmlFor="empresa">Nome da empresa *</Label>
+                <Input id="empresa" data-field="empresa" maxLength={120} aria-invalid={!!errors.empresa} placeholder="Ex: Pizzaria Bella" value={form.empresa} onChange={(e) => update("empresa", e.target.value)} className="bg-muted border-border" />
+                <FieldError name="empresa" />
               </div>
               <div className="space-y-2">
-                <Label>Categoria</Label>
-                <Select required onValueChange={(v) => update("categoria", v)}>
-                  <SelectTrigger className="bg-muted border-border">
+                <Label htmlFor="categoria">Categoria *</Label>
+                <Select value={form.categoria} onValueChange={(v) => update("categoria", v)}>
+                  <SelectTrigger id="categoria" data-field="categoria" aria-invalid={!!errors.categoria} className="bg-muted border-border">
                     <SelectValue placeholder="Selecione" />
                   </SelectTrigger>
                   <SelectContent>
@@ -151,30 +152,37 @@ const QueroContratar = () => {
                     <SelectItem value="Outro">📦 Outro</SelectItem>
                   </SelectContent>
                 </Select>
+                <FieldError name="categoria" />
               </div>
               <div className="space-y-2 compact-hide">
-                <Label>CNPJ (opcional)</Label>
-                <Input placeholder="00.000.000/0000-00" value={form.cnpj} onChange={(e) => update("cnpj", e.target.value)} className="bg-muted border-border" />
+                <Label htmlFor="cnpj">CNPJ (opcional)</Label>
+                <Input id="cnpj" data-field="cnpj" maxLength={20} aria-invalid={!!errors.cnpj} placeholder="00.000.000/0000-00" value={form.cnpj} onChange={(e) => update("cnpj", e.target.value)} className="bg-muted border-border" />
+                <FieldError name="cnpj" />
               </div>
               <div className="space-y-2">
-                <Label>Responsável</Label>
-                <Input required placeholder="Nome do contato" value={form.responsavel} onChange={(e) => update("responsavel", e.target.value)} className="bg-muted border-border" />
+                <Label htmlFor="responsavel">Responsável *</Label>
+                <Input id="responsavel" data-field="responsavel" maxLength={100} aria-invalid={!!errors.responsavel} placeholder="Nome do contato" value={form.responsavel} onChange={(e) => update("responsavel", e.target.value)} className="bg-muted border-border" />
+                <FieldError name="responsavel" />
               </div>
               <div className="space-y-2">
-                <Label>Telefone (WhatsApp)</Label>
-                <Input required placeholder="(41) 99999-9999" value={form.telefone} onChange={(e) => update("telefone", e.target.value)} className="bg-muted border-border" />
+                <Label htmlFor="telefone">Telefone (WhatsApp) *</Label>
+                <Input id="telefone" data-field="telefone" type="tel" inputMode="tel" maxLength={20} aria-invalid={!!errors.telefone} placeholder="(41) 99999-9999" value={form.telefone} onChange={(e) => update("telefone", e.target.value)} className="bg-muted border-border" />
+                <FieldError name="telefone" />
               </div>
               <div className="space-y-2">
-                <Label>Cidade</Label>
-                <Input required placeholder="Curitiba" value={form.cidade} onChange={(e) => update("cidade", e.target.value)} className="bg-muted border-border" />
+                <Label htmlFor="cidade">Cidade *</Label>
+                <Input id="cidade" data-field="cidade" maxLength={80} aria-invalid={!!errors.cidade} placeholder="Curitiba" value={form.cidade} onChange={(e) => update("cidade", e.target.value)} className="bg-muted border-border" />
+                <FieldError name="cidade" />
               </div>
               <div className="space-y-2">
-                <Label>Bairro</Label>
-                <Input required placeholder="Centro" value={form.bairro} onChange={(e) => update("bairro", e.target.value)} className="bg-muted border-border" />
+                <Label htmlFor="bairro">Bairro *</Label>
+                <Input id="bairro" data-field="bairro" maxLength={80} aria-invalid={!!errors.bairro} placeholder="Centro" value={form.bairro} onChange={(e) => update("bairro", e.target.value)} className="bg-muted border-border" />
+                <FieldError name="bairro" />
               </div>
               <div className="space-y-2 sm:col-span-2">
-                <Label>Endereço completo</Label>
-                <Input required placeholder="Rua, número, complemento" value={form.endereco} onChange={(e) => update("endereco", e.target.value)} className="bg-muted border-border" />
+                <Label htmlFor="endereco">Endereço completo *</Label>
+                <Input id="endereco" data-field="endereco" maxLength={200} aria-invalid={!!errors.endereco} placeholder="Rua, número, complemento" value={form.endereco} onChange={(e) => update("endereco", e.target.value)} className="bg-muted border-border" />
+                <FieldError name="endereco" />
               </div>
               <div className="space-y-2 sm:col-span-2">
                 <Label>Localização da empresa (opcional)</Label>
@@ -188,9 +196,9 @@ const QueroContratar = () => {
             <h2 className="font-heading text-base sm:text-lg font-semibold text-foreground">Forma de Contratação</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="space-y-2">
-                <Label>Tipo de pagamento</Label>
-                <Select required onValueChange={(v) => update("tipoPagamento", v)}>
-                  <SelectTrigger className="bg-muted border-border">
+                <Label htmlFor="tipoPagamento">Tipo de pagamento *</Label>
+                <Select value={form.tipoPagamento} onValueChange={(v) => update("tipoPagamento", v)}>
+                  <SelectTrigger id="tipoPagamento" data-field="tipoPagamento" aria-invalid={!!errors.tipoPagamento} className="bg-muted border-border">
                     <SelectValue placeholder="Selecione" />
                   </SelectTrigger>
                   <SelectContent>
@@ -199,10 +207,12 @@ const QueroContratar = () => {
                     <SelectItem value="Corrida">🛵 Valor por corrida</SelectItem>
                   </SelectContent>
                 </Select>
+                <FieldError name="tipoPagamento" />
               </div>
               <div className="space-y-2">
-                <Label>Valor oferecido (R$)</Label>
-                <Input required type="number" min="0" step="0.01" placeholder="Ex: 120.00" value={form.valor} onChange={(e) => update("valor", e.target.value)} className="bg-muted border-border" />
+                <Label htmlFor="valor">Valor oferecido (R$) *</Label>
+                <Input id="valor" data-field="valor" type="number" inputMode="decimal" min="0" max="100000" step="0.01" aria-invalid={!!errors.valor} placeholder="Ex: 120.00" value={form.valor} onChange={(e) => update("valor", e.target.value)} className="bg-muted border-border" />
+                <FieldError name="valor" />
               </div>
             </div>
           </div>
@@ -212,21 +222,23 @@ const QueroContratar = () => {
             <h2 className="font-heading text-base sm:text-lg font-semibold text-foreground">Detalhes da Entrega <span className="text-xs text-muted-foreground font-normal">(opcional)</span></h2>
             <div className="space-y-4">
               <div className="space-y-2">
-                <Label>Endereço de retirada</Label>
-                <Input placeholder="Rua, número, bairro" value={form.retirada} onChange={(e) => update("retirada", e.target.value)} className="bg-muted border-border" />
+                <Label htmlFor="retirada">Endereço de retirada</Label>
+                <Input id="retirada" data-field="retirada" maxLength={200} placeholder="Rua, número, bairro" value={form.retirada} onChange={(e) => update("retirada", e.target.value)} className="bg-muted border-border" />
+                <FieldError name="retirada" />
               </div>
               <div className="space-y-2">
-                <Label>Endereço de entrega</Label>
-                <Input placeholder="Rua, número, bairro" value={form.entrega} onChange={(e) => update("entrega", e.target.value)} className="bg-muted border-border" />
+                <Label htmlFor="entrega">Endereço de entrega</Label>
+                <Input id="entrega" data-field="entrega" maxLength={200} placeholder="Rua, número, bairro" value={form.entrega} onChange={(e) => update("entrega", e.target.value)} className="bg-muted border-border" />
+                <FieldError name="entrega" />
               </div>
               <div className="space-y-2">
                 <Label>Localização da entrega (opcional)</Label>
                 <LocationButton {...geoEntrega} onRequest={geoEntrega.requestLocation} onReset={geoEntrega.reset} label="Marcar local atual da entrega" />
               </div>
               <div className="space-y-2">
-                <Label>Tipo de pedido</Label>
-                <Select onValueChange={(v) => update("tipoPedido", v)}>
-                  <SelectTrigger className="bg-muted border-border">
+                <Label htmlFor="tipoPedido">Tipo de pedido</Label>
+                <Select value={form.tipoPedido} onValueChange={(v) => update("tipoPedido", v)}>
+                  <SelectTrigger id="tipoPedido" className="bg-muted border-border">
                     <SelectValue placeholder="Selecione" />
                   </SelectTrigger>
                   <SelectContent>
@@ -240,18 +252,20 @@ const QueroContratar = () => {
                 </Select>
               </div>
               <div className="flex items-center justify-between">
-                <Label>Urgente?</Label>
-                <Switch checked={form.urgente} onCheckedChange={(v) => update("urgente", v)} />
+                <Label htmlFor="urgente">Urgente?</Label>
+                <Switch id="urgente" checked={form.urgente} onCheckedChange={(v) => update("urgente", v)} />
               </div>
               <div className="space-y-2">
-                <Label>Observações</Label>
-                <Textarea placeholder="Informações adicionais..." value={form.observacoes} onChange={(e) => update("observacoes", e.target.value)} className="bg-muted border-border min-h-[80px]" />
+                <Label htmlFor="observacoes">Observações</Label>
+                <Textarea id="observacoes" data-field="observacoes" maxLength={1000} placeholder="Informações adicionais..." value={form.observacoes} onChange={(e) => update("observacoes", e.target.value)} className="bg-muted border-border min-h-[80px]" />
+                <p className="text-[10px] text-muted-foreground text-right">{form.observacoes.length}/1000</p>
+                <FieldError name="observacoes" />
               </div>
             </div>
           </div>
 
-          <Button type="submit" size="lg" className="w-full glow-red text-base py-6 rounded-xl font-semibold">
-            Enviar Cadastro / Chamar Motoboy
+          <Button type="submit" disabled={submitting} size="lg" className="w-full glow-red text-base py-6 rounded-xl font-semibold">
+            {submitting ? "Enviando..." : "Enviar Cadastro / Chamar Motoboy"}
             <ArrowRight size={18} className="ml-2" />
           </Button>
         </form>
