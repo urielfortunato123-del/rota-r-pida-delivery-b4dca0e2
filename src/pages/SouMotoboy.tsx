@@ -15,10 +15,17 @@ const disponibilidades = ["Manhã", "Tarde", "Noite", "Madrugada", "Fim de seman
 
 type Errors = Partial<Record<keyof SouMotoboyData, string>>;
 
+type AnexoTipo = "cnh" | "moto";
+type Anexo = { id: string; tipo: AnexoTipo; file: File; preview: string };
+
+const MAX_ANEXOS = 6;
+const MAX_FILE_MB = 8;
+
 const SouMotoboy = () => {
   const geo = useGeolocation();
   const [errors, setErrors] = useState<Errors>({});
   const [submitting, setSubmitting] = useState(false);
+  const [anexos, setAnexos] = useState<Anexo[]>([]);
   const [form, setForm] = useState({
     nome: "",
     telefone: "",
@@ -48,6 +55,42 @@ const SouMotoboy = () => {
       ? form.disponibilidade.filter((d) => d !== item)
       : [...form.disponibilidade, item];
     update("disponibilidade", next);
+  };
+
+  const handleFiles = (tipo: AnexoTipo, files: FileList | null) => {
+    if (!files || files.length === 0) return;
+    const novos: Anexo[] = [];
+    for (const file of Array.from(files)) {
+      if (!file.type.startsWith("image/")) {
+        toast.error("Apenas imagens são aceitas");
+        continue;
+      }
+      if (file.size > MAX_FILE_MB * 1024 * 1024) {
+        toast.error(`Imagem muito grande (máx ${MAX_FILE_MB}MB)`);
+        continue;
+      }
+      novos.push({
+        id: `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
+        tipo,
+        file,
+        preview: URL.createObjectURL(file),
+      });
+    }
+    setAnexos((prev) => {
+      const total = [...prev, ...novos].slice(0, MAX_ANEXOS);
+      if (prev.length + novos.length > MAX_ANEXOS) {
+        toast.warning(`Máximo de ${MAX_ANEXOS} fotos`);
+      }
+      return total;
+    });
+  };
+
+  const removeAnexo = (id: string) => {
+    setAnexos((prev) => {
+      const found = prev.find((a) => a.id === id);
+      if (found) URL.revokeObjectURL(found.preview);
+      return prev.filter((a) => a.id !== id);
+    });
   };
 
   const handleSubmit = (e: React.FormEvent) => {
