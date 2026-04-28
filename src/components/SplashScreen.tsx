@@ -1,16 +1,44 @@
 import { useEffect, useState } from "react";
 
+const MIN_DURATION = 1500; // mínimo de exibição (evita "piscar")
+const MAX_DURATION = 5000; // teto absoluto: nunca segura mais que 5s
+const FADE_DURATION = 400;
+
 const SplashScreen = () => {
   const [visible, setVisible] = useState(true);
   const [fading, setFading] = useState(false);
 
   useEffect(() => {
-    // Começa o fade-out aos 4.5s e remove aos 5s
-    const fadeTimer = setTimeout(() => setFading(true), 4500);
-    const hideTimer = setTimeout(() => setVisible(false), 5000);
+    const startedAt = performance.now();
+    let hideTimer: number | undefined;
+    let fadeTimer: number | undefined;
+    let maxTimer: number | undefined;
+
+    const dismiss = () => {
+      const elapsed = performance.now() - startedAt;
+      const remaining = Math.max(0, MIN_DURATION - elapsed);
+      fadeTimer = window.setTimeout(() => setFading(true), remaining);
+      hideTimer = window.setTimeout(() => setVisible(false), remaining + FADE_DURATION);
+    };
+
+    // 1) Some assim que a janela disparar 'load' (todo CSS/JS/fonts iniciais ok)
+    if (document.readyState === "complete") {
+      dismiss();
+    } else {
+      window.addEventListener("load", dismiss, { once: true });
+    }
+
+    // 2) Garantia: nunca passa de 5s, mesmo se 'load' demorar (rede ruim)
+    maxTimer = window.setTimeout(() => {
+      setFading(true);
+      window.setTimeout(() => setVisible(false), FADE_DURATION);
+    }, MAX_DURATION);
+
     return () => {
-      clearTimeout(fadeTimer);
-      clearTimeout(hideTimer);
+      window.removeEventListener("load", dismiss);
+      if (fadeTimer) clearTimeout(fadeTimer);
+      if (hideTimer) clearTimeout(hideTimer);
+      if (maxTimer) clearTimeout(maxTimer);
     };
   }, []);
 
@@ -21,7 +49,7 @@ const SplashScreen = () => {
       role="status"
       aria-label="Carregando RotaRápida"
       className={`fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-background transition-opacity duration-500 ${
-        fading ? "opacity-0" : "opacity-100"
+        fading ? "opacity-0 pointer-events-none" : "opacity-100"
       }`}
     >
       <img
@@ -29,6 +57,8 @@ const SplashScreen = () => {
         alt="RotaRápida"
         width={160}
         height={160}
+        fetchPriority="high"
+        decoding="async"
         className="w-32 h-32 sm:w-40 sm:h-40 rounded-3xl glow-red animate-pulse"
       />
       <h1 className="mt-6 font-heading text-2xl sm:text-3xl font-bold text-gradient">
