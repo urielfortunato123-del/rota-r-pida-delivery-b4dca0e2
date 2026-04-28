@@ -165,6 +165,57 @@ const ComoFunciona = () => {
           </p>
         </div>
 
+        {/* Fluxo principal — 4 passos lineares */}
+        <section className="mb-14">
+          <h2 className="font-heading text-lg sm:text-xl font-bold text-center mb-6">
+            Em 4 passos simples
+          </h2>
+          <div className="relative">
+            {/* Linha conectora (somente desktop) */}
+            <div
+              aria-hidden="true"
+              className="hidden lg:block absolute left-0 right-0 top-[34px] h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent"
+            />
+            <ol className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 relative">
+              {fluxoSteps.map((step, i) => (
+                <li
+                  key={i}
+                  className="glass rounded-2xl p-4 sm:p-5 text-center animate-fade-in min-w-0 relative"
+                  style={{ animationDelay: `${i * 0.1}s` }}
+                >
+                  <div className="w-16 h-16 mx-auto rounded-full bg-primary/10 border-2 border-primary/30 flex items-center justify-center mb-3 relative z-10 bg-background">
+                    <step.icon size={26} className="text-primary" />
+                    <span className="absolute -top-1 -right-1 w-6 h-6 rounded-full bg-primary text-primary-foreground text-xs font-bold flex items-center justify-center font-heading shadow-lg">
+                      {i + 1}
+                    </span>
+                  </div>
+                  <h3 className="font-heading text-sm sm:text-base font-semibold mb-1 break-words">
+                    {step.title}
+                  </h3>
+                  <p className="text-muted-foreground text-xs sm:text-sm break-words">
+                    {step.desc}
+                  </p>
+                </li>
+              ))}
+            </ol>
+          </div>
+
+          <div className="mt-6 flex flex-wrap justify-center gap-3">
+            <Button asChild size="sm" className="rounded-xl glow-red">
+              <Link to="/contratar" onClick={() => handleCtaClick("contratar", "fluxo_principal")}>
+                Quero contratar
+                <ArrowRight size={14} className="ml-1" />
+              </Link>
+            </Button>
+            <Button asChild size="sm" variant="outline" className="rounded-xl">
+              <Link to="/motoboy" onClick={() => handleCtaClick("motoboy", "fluxo_principal")}>
+                Sou motoboy
+                <ArrowRight size={14} className="ml-1" />
+              </Link>
+            </Button>
+          </div>
+        </section>
+
         {/* Para Empresas */}
         <section className="mb-12">
           <div className="flex items-center gap-3 mb-5">
