@@ -262,7 +262,7 @@ const SouMotoboy = () => {
                 <Input id="moto" data-field="moto" maxLength={80} aria-invalid={!!errors.moto} placeholder="Ex: Honda CG 160" value={form.moto} onChange={(e) => update("moto", e.target.value)} className="bg-muted border-border" />
                 <FieldError name="moto" />
               </div>
-              <div className="space-y-2 compact-hide">
+              <div className="space-y-2">
                 <Label htmlFor="placa">Placa</Label>
                 <Input id="placa" data-field="placa" maxLength={10} aria-invalid={!!errors.placa} placeholder="ABC-1D23" value={form.placa} onChange={(e) => update("placa", e.target.value.toUpperCase())} className="bg-muted border-border" />
                 <FieldError name="placa" />
@@ -279,6 +279,85 @@ const SouMotoboy = () => {
                 <FieldError name="raioKm" />
               </div>
             </div>
+          </div>
+
+          {/* Anexos: fotos da CNH e documento da moto */}
+          <div className="glass rounded-2xl p-4 sm:p-6 space-y-4 scroll-card">
+            <div className="flex items-start gap-2">
+              <Paperclip size={18} className="text-primary flex-shrink-0 mt-1" />
+              <div className="min-w-0">
+                <h2 className="font-heading text-base sm:text-lg font-semibold text-foreground">
+                  Anexar fotos (opcional)
+                </h2>
+                <p className="text-xs text-muted-foreground mt-1">
+                  Tire ou envie fotos da CNH e do documento da moto. Vão junto no WhatsApp.
+                </p>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <label className="flex items-center justify-center gap-2 p-3 rounded-xl border border-dashed border-border bg-muted/40 hover:border-primary/60 hover:bg-muted/60 cursor-pointer transition-colors text-sm">
+                <Camera size={16} className="text-primary" />
+                <span>Foto da CNH</span>
+                <input
+                  type="file"
+                  accept="image/*"
+                  capture="environment"
+                  multiple
+                  className="hidden"
+                  onChange={(e) => {
+                    handleFiles("cnh", e.target.files);
+                    e.target.value = "";
+                  }}
+                />
+              </label>
+              <label className="flex items-center justify-center gap-2 p-3 rounded-xl border border-dashed border-border bg-muted/40 hover:border-primary/60 hover:bg-muted/60 cursor-pointer transition-colors text-sm">
+                <Camera size={16} className="text-primary" />
+                <span>Documento da moto</span>
+                <input
+                  type="file"
+                  accept="image/*"
+                  capture="environment"
+                  multiple
+                  className="hidden"
+                  onChange={(e) => {
+                    handleFiles("moto", e.target.files);
+                    e.target.value = "";
+                  }}
+                />
+              </label>
+            </div>
+
+            {anexos.length > 0 && (
+              <div className="space-y-2">
+                <p className="text-xs text-muted-foreground">
+                  {anexos.length} foto{anexos.length > 1 ? "s" : ""} anexada{anexos.length > 1 ? "s" : ""} (máx {MAX_ANEXOS})
+                </p>
+                <div className="grid grid-cols-3 sm:grid-cols-4 gap-2">
+                  {anexos.map((a) => (
+                    <div key={a.id} className="relative group aspect-square rounded-lg overflow-hidden border border-border bg-muted">
+                      <img
+                        src={a.preview}
+                        alt={a.tipo === "cnh" ? "CNH" : "Documento da moto"}
+                        className="w-full h-full object-cover"
+                        loading="lazy"
+                      />
+                      <span className="absolute bottom-0 left-0 right-0 bg-background/80 text-[10px] uppercase tracking-wide text-center py-0.5">
+                        {a.tipo === "cnh" ? "CNH" : "Moto"}
+                      </span>
+                      <button
+                        type="button"
+                        onClick={() => removeAnexo(a.id)}
+                        aria-label="Remover foto"
+                        className="absolute top-1 right-1 bg-destructive text-destructive-foreground rounded-full p-1 shadow opacity-90 hover:opacity-100"
+                      >
+                        <X size={12} />
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
 
           {/* Valores */}
