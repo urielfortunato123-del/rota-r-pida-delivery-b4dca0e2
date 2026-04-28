@@ -128,7 +128,7 @@ const QueroContratar = () => {
 
         <form onSubmit={handleSubmit} noValidate className="space-y-6 sm:space-y-8 form-compact">
           {/* Empresa */}
-          <div className="glass rounded-2xl p-4 sm:p-6 space-y-4 sm:space-y-5 scroll-card">
+          <div className="glass rounded-2xl p-4 sm:p-6 space-y-4 sm:space-y-5">
             <h2 className="font-heading text-base sm:text-lg font-semibold text-foreground">Dados da Empresa</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="space-y-2">
@@ -192,7 +192,7 @@ const QueroContratar = () => {
           </div>
 
           {/* Pagamento */}
-          <div className="glass rounded-2xl p-4 sm:p-6 space-y-4 sm:space-y-5 scroll-card">
+          <div className="glass rounded-2xl p-4 sm:p-6 space-y-4 sm:space-y-5">
             <h2 className="font-heading text-base sm:text-lg font-semibold text-foreground">Forma de Contratação</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="space-y-2">
@@ -218,7 +218,7 @@ const QueroContratar = () => {
           </div>
 
           {/* Entrega (opcional) */}
-          <div className="glass rounded-2xl p-4 sm:p-6 space-y-4 sm:space-y-5 scroll-card">
+          <div className="glass rounded-2xl p-4 sm:p-6 space-y-4 sm:space-y-5">
             <h2 className="font-heading text-base sm:text-lg font-semibold text-foreground">Detalhes da Entrega <span className="text-xs text-muted-foreground font-normal">(opcional)</span></h2>
             <div className="space-y-4">
               <div className="space-y-2">

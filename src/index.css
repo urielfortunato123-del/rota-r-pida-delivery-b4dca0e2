@@ -132,40 +132,36 @@
     @apply bg-card/60 backdrop-blur-xl border border-border/50;
   }
 
-  /* Mantida apenas como utilitário; por padrão NÃO cria scroll interno
-     para que a rolagem da página funcione em qualquer ponto da tela. */
-  .scroll-card {
-    max-height: none;
-    overflow: visible;
-  }
-
-  /* Modo compacto: ativado em telas pequenas via .form-compact no <form> */
+  /* Modo compacto: usado em telas pequenas via .form-compact no <form>.
+     Mantém o formulário enxuto SEM criar scroll interno e SEM reduzir
+     demais a área de toque (mínimo 44px nos campos para acessibilidade). */
   @media (max-width: 640px) {
     .form-compact .glass {
       @apply p-3 rounded-xl;
     }
     .form-compact .space-y-5 > * + *,
     .form-compact .space-y-4 > * + * {
-      margin-top: 0.625rem !important;
+      margin-top: 0.75rem !important;
     }
     .form-compact .gap-4 {
-      gap: 0.625rem !important;
+      gap: 0.75rem !important;
     }
     .form-compact h2 {
-      font-size: 0.9rem !important;
+      font-size: 0.95rem !important;
       margin-bottom: 0.25rem !important;
     }
     .form-compact label {
-      font-size: 0.75rem !important;
+      font-size: 0.8rem !important;
     }
+    /* Inputs com altura confortável de toque (≥ 44px) */
     .form-compact input,
     .form-compact [role="combobox"] {
-      height: 2.25rem !important;
-      font-size: 0.875rem !important;
+      height: 2.75rem !important;
+      font-size: 16px !important; /* evita zoom automático no iOS */
     }
     .form-compact textarea {
-      min-height: 60px !important;
-      font-size: 0.875rem !important;
+      min-height: 72px !important;
+      font-size: 16px !important;
     }
     .form-compact .compact-hide {
       display: none !important;
