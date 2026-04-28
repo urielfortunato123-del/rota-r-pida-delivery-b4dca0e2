@@ -75,6 +75,47 @@
   h1, h2, h3, h4, h5, h6 {
     @apply font-heading;
   }
+
+  /* ===== Foco acessível global =====
+     Garante anel de foco visível em qualquer elemento focável,
+     mesmo os que não recebem classes utilitárias do shadcn. */
+  :focus {
+    outline: none;
+  }
+  :focus-visible {
+    outline: 2px solid hsl(var(--primary));
+    outline-offset: 2px;
+    border-radius: 6px;
+  }
+  /* Para botões/links com fundo escuro, o ring fica mais visível */
+  a:focus-visible,
+  button:focus-visible,
+  [role="button"]:focus-visible,
+  [tabindex]:focus-visible {
+    outline: 2px solid hsl(var(--primary));
+    outline-offset: 2px;
+    box-shadow: 0 0 0 4px hsl(var(--background));
+  }
+
+  /* Skip link — visível apenas ao receber foco via teclado */
+  .skip-link {
+    position: fixed;
+    top: -100px;
+    left: 1rem;
+    z-index: 100;
+    padding: 0.75rem 1rem;
+    background: hsl(var(--primary));
+    color: hsl(var(--primary-foreground));
+    border-radius: 0.5rem;
+    font-weight: 600;
+    font-size: 0.875rem;
+    transition: top 0.2s ease;
+  }
+  .skip-link:focus {
+    top: 1rem;
+    outline: 2px solid hsl(var(--primary-foreground));
+    outline-offset: 2px;
+  }
 }
 
 @layer utilities {
