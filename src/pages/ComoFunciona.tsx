@@ -257,6 +257,32 @@ const ComoFunciona = () => {
             ))}
           </div>
         </section>
+
+        {/* Spacer to avoid floating bar overlapping content on mobile */}
+        <div className="h-24 sm:h-0" aria-hidden="true" />
+      </div>
+
+      {/* Floating CTA bar (mobile only) */}
+      <div
+        className="sm:hidden fixed bottom-0 left-0 right-0 z-40 px-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] pt-3 bg-gradient-to-t from-background via-background/95 to-background/0 pointer-events-none"
+      >
+        <div className="pointer-events-auto glass rounded-2xl p-2 flex gap-2 shadow-2xl border border-border/60">
+          <Button
+            asChild
+            size="sm"
+            className="flex-1 rounded-xl glow-red font-semibold text-xs h-11"
+          >
+            <Link to="/contratar">🔴 Quero contratar</Link>
+          </Button>
+          <Button
+            asChild
+            size="sm"
+            variant="outline"
+            className="flex-1 rounded-xl font-semibold text-xs h-11"
+          >
+            <Link to="/motoboy">⚫ Sou motoboy</Link>
+          </Button>
+        </div>
       </div>
     </div>
   );
