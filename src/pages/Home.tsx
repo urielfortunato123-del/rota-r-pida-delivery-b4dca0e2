@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { Bike, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import InviteButton from "@/components/InviteButton";
 
 const Home = () => {
   return (
@@ -39,6 +40,10 @@ const Home = () => {
                 ⚫ Sou Motoboy
               </Link>
             </Button>
+          </div>
+
+          <div className="mt-6 flex justify-center animate-fade-in" style={{ animationDelay: "0.4s" }}>
+            <InviteButton />
           </div>
         </div>
       </section>
