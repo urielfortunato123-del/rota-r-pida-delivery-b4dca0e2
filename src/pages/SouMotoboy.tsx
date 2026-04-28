@@ -217,7 +217,7 @@ const SouMotoboy = () => {
 
         <form onSubmit={handleSubmit} noValidate className="space-y-6 sm:space-y-8 form-compact">
           {/* Dados pessoais */}
-          <div className="glass rounded-2xl p-4 sm:p-6 space-y-4 sm:space-y-5 scroll-card">
+          <div className="glass rounded-2xl p-4 sm:p-6 space-y-4 sm:space-y-5">
             <h2 className="font-heading text-base sm:text-lg font-semibold text-foreground">Seus Dados</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="space-y-2">
@@ -254,7 +254,7 @@ const SouMotoboy = () => {
           </div>
 
           {/* Moto */}
-          <div className="glass rounded-2xl p-4 sm:p-6 space-y-4 sm:space-y-5 scroll-card">
+          <div className="glass rounded-2xl p-4 sm:p-6 space-y-4 sm:space-y-5">
             <h2 className="font-heading text-base sm:text-lg font-semibold text-foreground">Sua Moto</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="space-y-2">
@@ -282,7 +282,7 @@ const SouMotoboy = () => {
           </div>
 
           {/* Anexos: fotos da CNH e documento da moto */}
-          <div className="glass rounded-2xl p-4 sm:p-6 space-y-4 scroll-card">
+          <div className="glass rounded-2xl p-4 sm:p-6 space-y-4">
             <div className="flex items-start gap-2">
               <Paperclip size={18} className="text-primary flex-shrink-0 mt-1" />
               <div className="min-w-0">
@@ -361,7 +361,7 @@ const SouMotoboy = () => {
           </div>
 
           {/* Valores */}
-          <div className="glass rounded-2xl p-4 sm:p-6 space-y-4 sm:space-y-5 scroll-card">
+          <div className="glass rounded-2xl p-4 sm:p-6 space-y-4 sm:space-y-5">
             <h2 className="font-heading text-base sm:text-lg font-semibold text-foreground">Valores que você aceita</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="space-y-2">
@@ -387,7 +387,7 @@ const SouMotoboy = () => {
           </div>
 
           {/* Disponibilidade */}
-          <div className="glass rounded-2xl p-4 sm:p-6 space-y-4 sm:space-y-5 scroll-card">
+          <div className="glass rounded-2xl p-4 sm:p-6 space-y-4 sm:space-y-5">
             <h2 className="font-heading text-base sm:text-lg font-semibold text-foreground">Disponibilidade</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="space-y-2">
