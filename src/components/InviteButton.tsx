@@ -2,24 +2,12 @@ import { useState } from "react";
 import { Copy, Check } from "lucide-react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
+import { useLocale } from "@/lib/locale";
 
-const buildInviteMessage = () => {
-  const url =
-    typeof window !== "undefined"
-      ? `${window.location.protocol}//${window.location.host}/`
-      : "";
-
-  return `🛵 *Conheça o RotaRápida!*
-
-Motoboys sob demanda para restaurantes, farmácias, pizzarias e padarias.
-
-✅ Rápido, simples e sem contrato
-✅ Sem marketplace — só logística
-✅ Disponível 24/7 na sua região
-✅ Resposta em menos de 5 minutos
-
-Acesse: ${url}`;
-};
+const getUrl = () =>
+  typeof window !== "undefined"
+    ? `${window.location.protocol}//${window.location.host}/`
+    : "";
 
 const copyToClipboard = async (text: string) => {
   if (navigator.clipboard && window.isSecureContext) {
@@ -39,20 +27,21 @@ const copyToClipboard = async (text: string) => {
 };
 
 const InviteButton = () => {
+  const { t } = useLocale();
   const [copied, setCopied] = useState(false);
 
   const handleClick = async () => {
-    const message = buildInviteMessage();
+    const message = t.buildInviteMessage(getUrl());
     try {
       await copyToClipboard(message);
       setCopied(true);
-      toast.success("Convite copiado!", {
-        description: "Cole no WhatsApp, e-mail ou onde quiser.",
+      toast.success(t.inviteToastTitle, {
+        description: t.inviteToastDescription,
       });
       window.setTimeout(() => setCopied(false), 2500);
     } catch {
-      toast.error("Não foi possível copiar", {
-        description: "Tente novamente ou copie o link manualmente.",
+      toast.error(t.inviteToastErrorTitle, {
+        description: t.inviteToastErrorDescription,
       });
     }
   };
@@ -68,12 +57,12 @@ const InviteButton = () => {
       {copied ? (
         <>
           <Check size={16} className="mr-2 text-primary" />
-          Copiado!
+          {t.inviteCopiedButton}
         </>
       ) : (
         <>
           <Copy size={16} className="mr-2" />
-          Copiar convite
+          {t.inviteCopyButton}
         </>
       )}
     </Button>
