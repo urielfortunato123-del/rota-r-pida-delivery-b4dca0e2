@@ -71,14 +71,14 @@ const Home = () => {
       {/* Footer */}
       <footer className="border-t border-border py-8 sm:py-10">
         <div className="container px-4 max-w-3xl">
-          <div className="flex flex-col items-center gap-5 text-center">
+          <div className="flex flex-col items-center gap-4 sm:gap-5 text-center min-w-0">
             {/* Brand + slogan */}
-            <div className="space-y-1">
-              <p className="font-heading text-base sm:text-lg font-bold">
+            <div className="space-y-1 min-w-0 max-w-full">
+              <p className="font-heading text-sm sm:text-base md:text-lg font-bold leading-tight">
                 <span className="text-gradient">Rota</span>
                 <span className="text-foreground">Rápida</span>
               </p>
-              <p className="text-xs sm:text-sm text-muted-foreground break-words">
+              <p className="text-[11px] sm:text-xs md:text-sm text-muted-foreground break-words leading-snug">
                 Logística sob demanda para restaurantes.
               </p>
             </div>
@@ -86,25 +86,25 @@ const Home = () => {
             {/* Nav links */}
             <nav
               aria-label="Rodapé"
-              className="flex items-center justify-center gap-x-4 gap-y-2 flex-wrap text-xs sm:text-sm"
+              className="flex items-center justify-center gap-x-3 gap-y-1.5 flex-wrap text-[11px] sm:text-xs md:text-sm max-w-full"
             >
               <Link
                 to="/privacidade"
-                className="text-muted-foreground hover:text-primary transition-colors"
+                className="text-muted-foreground hover:text-primary transition-colors whitespace-nowrap"
               >
                 Privacidade
               </Link>
               <span aria-hidden="true" className="text-border">•</span>
               <Link
                 to="/termos"
-                className="text-muted-foreground hover:text-primary transition-colors"
+                className="text-muted-foreground hover:text-primary transition-colors whitespace-nowrap"
               >
                 Termos de uso
               </Link>
               <span aria-hidden="true" className="text-border">•</span>
               <Link
                 to="/como-funciona"
-                className="text-muted-foreground hover:text-primary transition-colors"
+                className="text-muted-foreground hover:text-primary transition-colors whitespace-nowrap"
               >
                 Como funciona
               </Link>
@@ -114,13 +114,14 @@ const Home = () => {
             <div className="w-12 h-px bg-border" aria-hidden="true" />
 
             {/* Copyright + credits */}
-            <div className="flex flex-col gap-1 text-[11px] sm:text-xs text-muted-foreground">
+            <div className="flex flex-col gap-0.5 text-[10px] sm:text-[11px] md:text-xs text-muted-foreground leading-relaxed max-w-full">
               <p className="break-words">
-                © {new Date().getFullYear()} RotaRápida. Todos os direitos reservados.
+                © {new Date().getFullYear()} RotaRápida.
+                <span className="hidden sm:inline"> Todos os direitos reservados.</span>
               </p>
               <p className="break-words">
                 Desenvolvido por{" "}
-                <span className="text-foreground font-medium">
+                <span className="text-foreground font-medium whitespace-nowrap">
                   Uriel da Fonseca Fortunato
                 </span>
               </p>
