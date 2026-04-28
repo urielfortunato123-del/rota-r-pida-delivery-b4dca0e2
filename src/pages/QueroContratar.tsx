@@ -5,13 +5,23 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
-import { ArrowRight, Info } from "lucide-react";
+import { ArrowRight, Info, AlertCircle } from "lucide-react";
+import { toast } from "sonner";
 import { useGeolocation } from "@/hooks/use-geolocation";
 import LocationButton from "@/components/LocationButton";
+import {
+  queroContratarSchema,
+  formatZodErrors,
+  type QueroContratarData,
+} from "@/lib/form-schemas";
+
+type Errors = Partial<Record<keyof QueroContratarData, string>>;
 
 const QueroContratar = () => {
   const geoEmpresa = useGeolocation();
   const geoEntrega = useGeolocation();
+  const [errors, setErrors] = useState<Errors>({});
+  const [submitting, setSubmitting] = useState(false);
   const [form, setForm] = useState({
     empresa: "",
     categoria: "",
@@ -30,32 +40,71 @@ const QueroContratar = () => {
     observacoes: "",
   });
 
-  const update = (key: string, value: string | boolean) =>
+  const update = (key: string, value: string | boolean) => {
     setForm((prev) => ({ ...prev, [key]: value }));
+    // Limpa erro do campo ao começar a corrigir
+    if (errors[key as keyof QueroContratarData]) {
+      setErrors((prev) => ({ ...prev, [key]: undefined }));
+    }
+  };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    setSubmitting(true);
+
+    const result = queroContratarSchema.safeParse(form);
+    if (!result.success) {
+      const fieldErrors = formatZodErrors<keyof QueroContratarData>(result.error);
+      setErrors(fieldErrors);
+      const firstError = Object.values(fieldErrors)[0];
+      toast.error("Confira os campos do formulário", {
+        description: firstError ?? "Existem campos inválidos ou obrigatórios.",
+      });
+      // Foca o primeiro campo com erro
+      const firstKey = Object.keys(fieldErrors)[0];
+      if (firstKey) {
+        const el = document.querySelector<HTMLElement>(`[data-field="${firstKey}"]`);
+        el?.scrollIntoView({ behavior: "smooth", block: "center" });
+        el?.focus({ preventScroll: true });
+      }
+      setSubmitting(false);
+      return;
+    }
+
+    const data = result.data;
+    setErrors({});
+
     const msg = encodeURIComponent(
       `🚀 *RotaRápida - Novo Cadastro/Pedido*\n\n` +
-      `🏢 *Empresa:* ${form.empresa}\n` +
-      `📂 *Categoria:* ${form.categoria}\n` +
-      `📄 *CNPJ:* ${form.cnpj || "Não informado"}\n` +
-      `👤 *Responsável:* ${form.responsavel}\n` +
-      `📱 *Telefone:* ${form.telefone}\n` +
-      `📍 *Cidade/Bairro:* ${form.cidade} - ${form.bairro}\n` +
-      `🏠 *Endereço:* ${form.endereco}\n` +
+      `🏢 *Empresa:* ${data.empresa}\n` +
+      `📂 *Categoria:* ${data.categoria}\n` +
+      `📄 *CNPJ:* ${data.cnpj || "Não informado"}\n` +
+      `👤 *Responsável:* ${data.responsavel}\n` +
+      `📱 *Telefone:* ${data.telefone}\n` +
+      `📍 *Cidade/Bairro:* ${data.cidade} - ${data.bairro}\n` +
+      `🏠 *Endereço:* ${data.endereco}\n` +
       (geoEmpresa.location ? `🗺 *Local da empresa:* ${geoEmpresa.location.mapsUrl}\n` : "") +
-      `\n📦 *Retirada:* ${form.retirada || "—"}\n` +
-      `🎯 *Entrega:* ${form.entrega || "—"}\n` +
+      `\n📦 *Retirada:* ${data.retirada || "—"}\n` +
+      `🎯 *Entrega:* ${data.entrega || "—"}\n` +
       (geoEntrega.location ? `🗺 *Local da entrega:* ${geoEntrega.location.mapsUrl}\n` : "") +
-      `🍽 *Tipo de pedido:* ${form.tipoPedido || "—"}\n\n` +
-      `💰 *Forma de pagamento:* ${form.tipoPagamento}\n` +
-      `💵 *Valor oferecido:* R$ ${form.valor}\n` +
-      `⚡ *Urgente:* ${form.urgente ? "Sim" : "Não"}\n\n` +
-      `📝 *Observações:* ${form.observacoes || "Nenhuma"}`
+      `🍽 *Tipo de pedido:* ${data.tipoPedido || "—"}\n\n` +
+      `💰 *Forma de pagamento:* ${data.tipoPagamento}\n` +
+      `💵 *Valor oferecido:* R$ ${data.valor}\n` +
+      `⚡ *Urgente:* ${data.urgente ? "Sim" : "Não"}\n\n` +
+      `📝 *Observações:* ${data.observacoes || "Nenhuma"}`
     );
-    window.open(`https://wa.me/5541999580271?text=${msg}`, "_blank");
+    window.open(`https://wa.me/5541999580271?text=${msg}`, "_blank", "noopener,noreferrer");
+    toast.success("Pedido enviado!", { description: "Continue no WhatsApp para finalizar." });
+    setSubmitting(false);
   };
+
+  const FieldError = ({ name }: { name: keyof QueroContratarData }) =>
+    errors[name] ? (
+      <p className="flex items-start gap-1 text-xs text-destructive mt-1 break-words" role="alert">
+        <AlertCircle size={12} className="flex-shrink-0 mt-0.5" />
+        <span>{errors[name]}</span>
+      </p>
+    ) : null;
 
   return (
     <div className="min-h-screen pt-24 pb-16">
