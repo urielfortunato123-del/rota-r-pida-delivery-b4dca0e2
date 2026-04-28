@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { Bike, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import InviteButton from "@/components/InviteButton";
+import WhatsappShareButton from "@/components/WhatsappShareButton";
 
 const Home = () => {
   return (
@@ -42,8 +43,9 @@ const Home = () => {
             </Button>
           </div>
 
-          <div className="mt-6 flex justify-center animate-fade-in" style={{ animationDelay: "0.4s" }}>
+          <div className="mt-6 flex flex-wrap items-center justify-center gap-2 animate-fade-in" style={{ animationDelay: "0.4s" }}>
             <InviteButton />
+            <WhatsappShareButton />
           </div>
         </div>
       </section>
