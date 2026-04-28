@@ -3,12 +3,23 @@ import { useEffect, useState } from "react";
 const MIN_DURATION = 1500; // mínimo de exibição (evita "piscar")
 const MAX_DURATION = 5000; // teto absoluto: nunca segura mais que 5s
 const FADE_DURATION = 400;
+const STORAGE_KEY = "rr_splash_shown";
 
 const SplashScreen = () => {
-  const [visible, setVisible] = useState(true);
+  // Só mostra se ainda não foi exibido nesta sessão do navegador
+  const [visible, setVisible] = useState(() => {
+    if (typeof window === "undefined") return false;
+    try {
+      return sessionStorage.getItem(STORAGE_KEY) !== "1";
+    } catch {
+      return true;
+    }
+  });
   const [fading, setFading] = useState(false);
 
   useEffect(() => {
+    if (!visible) return;
+    try { sessionStorage.setItem(STORAGE_KEY, "1"); } catch { /* ignore */ }
     const startedAt = performance.now();
     let hideTimer: number | undefined;
     let fadeTimer: number | undefined;
