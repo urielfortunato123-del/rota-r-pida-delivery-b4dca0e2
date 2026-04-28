@@ -16,6 +16,28 @@
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/manifest.json" />
 
+    <!-- Preload da logo do splash + ícone do PWA pra aparecer instantâneo -->
+    <link rel="preload" as="image" href="/icon-512.png" fetchpriority="high" />
+
+    <!-- Splash inline mostrado ANTES do React montar (carregamento percebido instantâneo) -->
+    <style>
+      #initial-splash {
+        position: fixed; inset: 0; z-index: 99999;
+        display: flex; flex-direction: column; align-items: center; justify-content: center;
+        background: hsl(0 0% 4%); color: hsl(0 0% 95%);
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+        transition: opacity .3s ease;
+      }
+      #initial-splash img {
+        width: 128px; height: 128px; border-radius: 24px;
+        box-shadow: 0 0 40px rgba(220, 38, 38, .35);
+        animation: is-pulse 1.4s ease-in-out infinite;
+      }
+      #initial-splash h1 { margin: 24px 0 4px; font-size: 24px; font-weight: 700; }
+      #initial-splash p  { margin: 0; font-size: 13px; color: hsl(0 0% 55%); }
+      @keyframes is-pulse { 0%,100%{opacity:1} 50%{opacity:.6} }
+    </style>
+
     <meta property="og:title" content="RotaRápida — Motoboy sob demanda" />
     <meta property="og:description" content="Conectamos restaurantes a motoboys em tempo real. Rápido, simples e sem contrato." />
     <meta property="og:type" content="website" />
