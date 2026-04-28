@@ -43,6 +43,29 @@ const handleCtaClick = (label: "contratar" | "motoboy", origin: string) => {
   }
 };
 
+const fluxoSteps = [
+  {
+    icon: PencilLine,
+    title: "Preencha o cadastro",
+    desc: "Conte sobre o pedido ou seu perfil de motoboy em poucos campos.",
+  },
+  {
+    icon: MessageCircle,
+    title: "Chame no WhatsApp",
+    desc: "Ao enviar, abrimos um chat direto com o time do RotaRápida.",
+  },
+  {
+    icon: ThumbsUp,
+    title: "Motoboy aceita",
+    desc: "Indicamos o motoboy mais próximo. Ele confirma na hora.",
+  },
+  {
+    icon: PackageCheck,
+    title: "Entrega realizada",
+    desc: "Acompanhe pelo WhatsApp até a confirmação de entrega.",
+  },
+];
+
 const empresaSteps = [
   {
     icon: ClipboardList,
