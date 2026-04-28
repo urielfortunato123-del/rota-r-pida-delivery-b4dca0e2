@@ -69,8 +69,21 @@ const Home = () => {
 
       {/* Footer */}
       <footer className="border-t border-border py-8">
-        <div className="container text-center text-sm text-muted-foreground space-y-1">
+        <div className="container text-center text-sm text-muted-foreground space-y-3">
           <p>© {new Date().getFullYear()} RotaRápida. Logística sob demanda.</p>
+          <nav className="flex items-center justify-center gap-4 flex-wrap text-xs">
+            <Link to="/privacidade" className="hover:text-primary transition-colors">
+              Privacidade
+            </Link>
+            <span aria-hidden="true" className="text-border">•</span>
+            <Link to="/termos" className="hover:text-primary transition-colors">
+              Termos de uso
+            </Link>
+            <span aria-hidden="true" className="text-border">•</span>
+            <Link to="/como-funciona" className="hover:text-primary transition-colors">
+              Como funciona
+            </Link>
+          </nav>
           <p className="text-xs">Desenvolvido por Uriel da Fonseca Fortunato</p>
         </div>
       </footer>

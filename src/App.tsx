@@ -10,6 +10,8 @@ import QueroContratar from "./pages/QueroContratar";
 import SouMotoboy from "./pages/SouMotoboy";
 import ComoFunciona from "./pages/ComoFunciona";
 import Analytics from "./pages/Analytics";
+import Privacidade from "./pages/Privacidade";
+import Termos from "./pages/Termos";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -28,6 +30,8 @@ const App = () => (
           <Route path="/motoboy" element={<SouMotoboy />} />
           <Route path="/como-funciona" element={<ComoFunciona />} />
           <Route path="/analytics" element={<Analytics />} />
+          <Route path="/privacidade" element={<Privacidade />} />
+          <Route path="/termos" element={<Termos />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
