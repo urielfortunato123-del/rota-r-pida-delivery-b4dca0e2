@@ -132,22 +132,11 @@
     @apply bg-card/60 backdrop-blur-xl border border-border/50;
   }
 
-  /* Limita a altura de blocos altos no mobile e adiciona scroll interno */
+  /* Mantida apenas como utilitário; por padrão NÃO cria scroll interno
+     para que a rolagem da página funcione em qualquer ponto da tela. */
   .scroll-card {
-    @apply max-h-[70vh] overflow-y-auto overscroll-contain;
-    scrollbar-width: thin;
-  }
-  .scroll-card::-webkit-scrollbar {
-    width: 6px;
-  }
-  .scroll-card::-webkit-scrollbar-thumb {
-    @apply bg-border rounded-full;
-  }
-  @screen md {
-    .scroll-card {
-      max-height: none;
-      overflow: visible;
-    }
+    max-height: none;
+    overflow: visible;
   }
 
   /* Modo compacto: ativado em telas pequenas via .form-compact no <form> */
