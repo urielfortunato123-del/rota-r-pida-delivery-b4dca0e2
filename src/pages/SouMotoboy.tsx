@@ -5,7 +5,7 @@ import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { ArrowRight, Info, AlertCircle } from "lucide-react";
+import { ArrowRight, Info, AlertCircle, Paperclip, X, Camera } from "lucide-react";
 import { toast } from "sonner";
 import { useGeolocation } from "@/hooks/use-geolocation";
 import LocationButton from "@/components/LocationButton";
@@ -15,10 +15,17 @@ const disponibilidades = ["Manhã", "Tarde", "Noite", "Madrugada", "Fim de seman
 
 type Errors = Partial<Record<keyof SouMotoboyData, string>>;
 
+type AnexoTipo = "cnh" | "moto";
+type Anexo = { id: string; tipo: AnexoTipo; file: File; preview: string };
+
+const MAX_ANEXOS = 6;
+const MAX_FILE_MB = 8;
+
 const SouMotoboy = () => {
   const geo = useGeolocation();
   const [errors, setErrors] = useState<Errors>({});
   const [submitting, setSubmitting] = useState(false);
+  const [anexos, setAnexos] = useState<Anexo[]>([]);
   const [form, setForm] = useState({
     nome: "",
     telefone: "",
@@ -50,7 +57,43 @@ const SouMotoboy = () => {
     update("disponibilidade", next);
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleFiles = (tipo: AnexoTipo, files: FileList | null) => {
+    if (!files || files.length === 0) return;
+    const novos: Anexo[] = [];
+    for (const file of Array.from(files)) {
+      if (!file.type.startsWith("image/")) {
+        toast.error("Apenas imagens são aceitas");
+        continue;
+      }
+      if (file.size > MAX_FILE_MB * 1024 * 1024) {
+        toast.error(`Imagem muito grande (máx ${MAX_FILE_MB}MB)`);
+        continue;
+      }
+      novos.push({
+        id: `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
+        tipo,
+        file,
+        preview: URL.createObjectURL(file),
+      });
+    }
+    setAnexos((prev) => {
+      const total = [...prev, ...novos].slice(0, MAX_ANEXOS);
+      if (prev.length + novos.length > MAX_ANEXOS) {
+        toast.warning(`Máximo de ${MAX_ANEXOS} fotos`);
+      }
+      return total;
+    });
+  };
+
+  const removeAnexo = (id: string) => {
+    setAnexos((prev) => {
+      const found = prev.find((a) => a.id === id);
+      if (found) URL.revokeObjectURL(found.preview);
+      return prev.filter((a) => a.id !== id);
+    });
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setSubmitting(true);
 
@@ -75,7 +118,10 @@ const SouMotoboy = () => {
     const data = result.data;
     setErrors({});
 
-    const msg = encodeURIComponent(
+    const cnhCount = anexos.filter((a) => a.tipo === "cnh").length;
+    const motoCount = anexos.filter((a) => a.tipo === "moto").length;
+
+    const textoPlano =
       `🛵 *RotaRápida - Novo Motoboy*\n\n` +
       `👤 *Nome:* ${data.nome}\n` +
       `📱 *Telefone:* ${data.telefone}\n` +
@@ -89,10 +135,55 @@ const SouMotoboy = () => {
       `💰 *Forma de cobrança:* ${data.tipoPagamento}\n` +
       `💵 *Valor mínimo:* R$ ${data.valorMinimo}\n\n` +
       `⏰ *Horário:* ${data.horarioInicio} às ${data.horarioFim}\n` +
-      `📅 *Disponibilidade:* ${data.disponibilidade.join(", ")}`
-    );
+      `📅 *Disponibilidade:* ${data.disponibilidade.join(", ")}` +
+      (anexos.length > 0
+        ? `\n\n📎 *Anexos enviados:* ${cnhCount} foto(s) da CNH e ${motoCount} foto(s) da moto/documento`
+        : "");
+
+    // Tenta usar Web Share API (Android/iOS) para mandar texto + fotos juntos
+    const arquivos = anexos.map((a) => a.file);
+    const podeCompartilharArquivos =
+      anexos.length > 0 &&
+      typeof navigator !== "undefined" &&
+      typeof navigator.canShare === "function" &&
+      navigator.canShare({ files: arquivos });
+
+    if (podeCompartilharArquivos) {
+      try {
+        await navigator.share({
+          title: "RotaRápida - Cadastro de Motoboy",
+          text: textoPlano,
+          files: arquivos,
+        });
+        toast.success("Cadastro enviado!", {
+          description: "Selecione o WhatsApp para finalizar o envio com as fotos.",
+        });
+        setSubmitting(false);
+        return;
+      } catch (err) {
+        // Usuário cancelou ou erro - cai no fallback abaixo
+        if ((err as Error)?.name !== "AbortError") {
+          console.warn("Share API falhou:", err);
+        } else {
+          setSubmitting(false);
+          return;
+        }
+      }
+    }
+
+    // Fallback: abre WhatsApp só com texto
+    const msg = encodeURIComponent(textoPlano);
     window.open(`https://wa.me/5541999580271?text=${msg}`, "_blank", "noopener,noreferrer");
-    toast.success("Cadastro enviado!", { description: "Continue no WhatsApp para finalizar." });
+
+    if (anexos.length > 0) {
+      toast.success("Texto enviado para o WhatsApp!", {
+        description: "Anexe as fotos manualmente no chat usando o clipe 📎 do WhatsApp.",
+      });
+    } else {
+      toast.success("Cadastro enviado!", {
+        description: "Continue no WhatsApp para finalizar.",
+      });
+    }
     setSubmitting(false);
   };
 
@@ -149,7 +240,7 @@ const SouMotoboy = () => {
                 <Input id="bairro" data-field="bairro" maxLength={80} aria-invalid={!!errors.bairro} placeholder="Centro" value={form.bairro} onChange={(e) => update("bairro", e.target.value)} className="bg-muted border-border" />
                 <FieldError name="bairro" />
               </div>
-              <div className="space-y-2 sm:col-span-2 compact-hide">
+              <div className="space-y-2 sm:col-span-2">
                 <Label htmlFor="cnh">CNH (categoria A)</Label>
                 <Input id="cnh" data-field="cnh" maxLength={20} aria-invalid={!!errors.cnh} placeholder="Número da CNH" value={form.cnh} onChange={(e) => update("cnh", e.target.value)} className="bg-muted border-border" />
                 <FieldError name="cnh" />
@@ -171,7 +262,7 @@ const SouMotoboy = () => {
                 <Input id="moto" data-field="moto" maxLength={80} aria-invalid={!!errors.moto} placeholder="Ex: Honda CG 160" value={form.moto} onChange={(e) => update("moto", e.target.value)} className="bg-muted border-border" />
                 <FieldError name="moto" />
               </div>
-              <div className="space-y-2 compact-hide">
+              <div className="space-y-2">
                 <Label htmlFor="placa">Placa</Label>
                 <Input id="placa" data-field="placa" maxLength={10} aria-invalid={!!errors.placa} placeholder="ABC-1D23" value={form.placa} onChange={(e) => update("placa", e.target.value.toUpperCase())} className="bg-muted border-border" />
                 <FieldError name="placa" />
@@ -188,6 +279,85 @@ const SouMotoboy = () => {
                 <FieldError name="raioKm" />
               </div>
             </div>
+          </div>
+
+          {/* Anexos: fotos da CNH e documento da moto */}
+          <div className="glass rounded-2xl p-4 sm:p-6 space-y-4 scroll-card">
+            <div className="flex items-start gap-2">
+              <Paperclip size={18} className="text-primary flex-shrink-0 mt-1" />
+              <div className="min-w-0">
+                <h2 className="font-heading text-base sm:text-lg font-semibold text-foreground">
+                  Anexar fotos (opcional)
+                </h2>
+                <p className="text-xs text-muted-foreground mt-1">
+                  Tire ou envie fotos da CNH e do documento da moto. Vão junto no WhatsApp.
+                </p>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <label className="flex items-center justify-center gap-2 p-3 rounded-xl border border-dashed border-border bg-muted/40 hover:border-primary/60 hover:bg-muted/60 cursor-pointer transition-colors text-sm">
+                <Camera size={16} className="text-primary" />
+                <span>Foto da CNH</span>
+                <input
+                  type="file"
+                  accept="image/*"
+                  capture="environment"
+                  multiple
+                  className="hidden"
+                  onChange={(e) => {
+                    handleFiles("cnh", e.target.files);
+                    e.target.value = "";
+                  }}
+                />
+              </label>
+              <label className="flex items-center justify-center gap-2 p-3 rounded-xl border border-dashed border-border bg-muted/40 hover:border-primary/60 hover:bg-muted/60 cursor-pointer transition-colors text-sm">
+                <Camera size={16} className="text-primary" />
+                <span>Documento da moto</span>
+                <input
+                  type="file"
+                  accept="image/*"
+                  capture="environment"
+                  multiple
+                  className="hidden"
+                  onChange={(e) => {
+                    handleFiles("moto", e.target.files);
+                    e.target.value = "";
+                  }}
+                />
+              </label>
+            </div>
+
+            {anexos.length > 0 && (
+              <div className="space-y-2">
+                <p className="text-xs text-muted-foreground">
+                  {anexos.length} foto{anexos.length > 1 ? "s" : ""} anexada{anexos.length > 1 ? "s" : ""} (máx {MAX_ANEXOS})
+                </p>
+                <div className="grid grid-cols-3 sm:grid-cols-4 gap-2">
+                  {anexos.map((a) => (
+                    <div key={a.id} className="relative group aspect-square rounded-lg overflow-hidden border border-border bg-muted">
+                      <img
+                        src={a.preview}
+                        alt={a.tipo === "cnh" ? "CNH" : "Documento da moto"}
+                        className="w-full h-full object-cover"
+                        loading="lazy"
+                      />
+                      <span className="absolute bottom-0 left-0 right-0 bg-background/80 text-[10px] uppercase tracking-wide text-center py-0.5">
+                        {a.tipo === "cnh" ? "CNH" : "Moto"}
+                      </span>
+                      <button
+                        type="button"
+                        onClick={() => removeAnexo(a.id)}
+                        aria-label="Remover foto"
+                        className="absolute top-1 right-1 bg-destructive text-destructive-foreground rounded-full p-1 shadow opacity-90 hover:opacity-100"
+                      >
+                        <X size={12} />
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
 
           {/* Valores */}
