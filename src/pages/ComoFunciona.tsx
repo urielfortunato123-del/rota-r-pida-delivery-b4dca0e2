@@ -13,6 +13,10 @@ import {
   Clock,
   Zap,
   ArrowRight,
+  PencilLine,
+  MessageCircle,
+  ThumbsUp,
+  PackageCheck,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { trackEvent } from "@/lib/analytics";
