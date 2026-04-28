@@ -15,6 +15,14 @@ import {
   ArrowRight,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { trackEvent } from "@/lib/analytics";
+
+const handleCtaClick = (label: "contratar" | "motoboy", origin: string) => {
+  trackEvent("cta_click", {
+    label: `${label}:${origin}`,
+    page: "/como-funciona",
+  });
+};
 
 const empresaSteps = [
   {
