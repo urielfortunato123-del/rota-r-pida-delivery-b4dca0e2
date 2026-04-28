@@ -23,17 +23,22 @@ const App = () => (
       <Sonner />
       <BrowserRouter>
         <ScrollToTop />
+        <a href="#main-content" className="skip-link">
+          Pular para o conteúdo principal
+        </a>
         <Navbar />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/contratar" element={<QueroContratar />} />
-          <Route path="/motoboy" element={<SouMotoboy />} />
-          <Route path="/como-funciona" element={<ComoFunciona />} />
-          <Route path="/analytics" element={<Analytics />} />
-          <Route path="/privacidade" element={<Privacidade />} />
-          <Route path="/termos" element={<Termos />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
+        <main id="main-content" tabIndex={-1}>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/contratar" element={<QueroContratar />} />
+            <Route path="/motoboy" element={<SouMotoboy />} />
+            <Route path="/como-funciona" element={<ComoFunciona />} />
+            <Route path="/analytics" element={<Analytics />} />
+            <Route path="/privacidade" element={<Privacidade />} />
+            <Route path="/termos" element={<Termos />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </main>
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>
