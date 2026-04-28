@@ -54,7 +54,26 @@
   </head>
 
   <body>
+    <div id="initial-splash" aria-label="Carregando RotaRápida">
+      <img src="/icon-512.png" alt="RotaRápida" width="128" height="128" fetchpriority="high" />
+      <h1>RotaRápida</h1>
+      <p>Motoboy sob demanda</p>
+    </div>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
+    <script>
+      // Remove o splash inline assim que o React montar (o SplashScreen do React assume)
+      window.addEventListener('DOMContentLoaded', () => {
+        const tryRemove = () => {
+          if (document.getElementById('root')?.children.length) {
+            const s = document.getElementById('initial-splash');
+            if (s) { s.style.opacity = '0'; setTimeout(() => s.remove(), 300); }
+          } else {
+            requestAnimationFrame(tryRemove);
+          }
+        };
+        tryRemove();
+      });
+    </script>
   </body>
 </html>
