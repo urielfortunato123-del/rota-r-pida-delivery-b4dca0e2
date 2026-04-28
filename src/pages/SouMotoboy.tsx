@@ -93,7 +93,7 @@ const SouMotoboy = () => {
     });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setSubmitting(true);
 
@@ -118,7 +118,10 @@ const SouMotoboy = () => {
     const data = result.data;
     setErrors({});
 
-    const msg = encodeURIComponent(
+    const cnhCount = anexos.filter((a) => a.tipo === "cnh").length;
+    const motoCount = anexos.filter((a) => a.tipo === "moto").length;
+
+    const textoPlano =
       `🛵 *RotaRápida - Novo Motoboy*\n\n` +
       `👤 *Nome:* ${data.nome}\n` +
       `📱 *Telefone:* ${data.telefone}\n` +
@@ -132,10 +135,55 @@ const SouMotoboy = () => {
       `💰 *Forma de cobrança:* ${data.tipoPagamento}\n` +
       `💵 *Valor mínimo:* R$ ${data.valorMinimo}\n\n` +
       `⏰ *Horário:* ${data.horarioInicio} às ${data.horarioFim}\n` +
-      `📅 *Disponibilidade:* ${data.disponibilidade.join(", ")}`
-    );
+      `📅 *Disponibilidade:* ${data.disponibilidade.join(", ")}` +
+      (anexos.length > 0
+        ? `\n\n📎 *Anexos enviados:* ${cnhCount} foto(s) da CNH e ${motoCount} foto(s) da moto/documento`
+        : "");
+
+    // Tenta usar Web Share API (Android/iOS) para mandar texto + fotos juntos
+    const arquivos = anexos.map((a) => a.file);
+    const podeCompartilharArquivos =
+      anexos.length > 0 &&
+      typeof navigator !== "undefined" &&
+      typeof navigator.canShare === "function" &&
+      navigator.canShare({ files: arquivos });
+
+    if (podeCompartilharArquivos) {
+      try {
+        await navigator.share({
+          title: "RotaRápida - Cadastro de Motoboy",
+          text: textoPlano,
+          files: arquivos,
+        });
+        toast.success("Cadastro enviado!", {
+          description: "Selecione o WhatsApp para finalizar o envio com as fotos.",
+        });
+        setSubmitting(false);
+        return;
+      } catch (err) {
+        // Usuário cancelou ou erro - cai no fallback abaixo
+        if ((err as Error)?.name !== "AbortError") {
+          console.warn("Share API falhou:", err);
+        } else {
+          setSubmitting(false);
+          return;
+        }
+      }
+    }
+
+    // Fallback: abre WhatsApp só com texto
+    const msg = encodeURIComponent(textoPlano);
     window.open(`https://wa.me/5541999580271?text=${msg}`, "_blank", "noopener,noreferrer");
-    toast.success("Cadastro enviado!", { description: "Continue no WhatsApp para finalizar." });
+
+    if (anexos.length > 0) {
+      toast.success("Texto enviado para o WhatsApp!", {
+        description: "Anexe as fotos manualmente no chat usando o clipe 📎 do WhatsApp.",
+      });
+    } else {
+      toast.success("Cadastro enviado!", {
+        description: "Continue no WhatsApp para finalizar.",
+      });
+    }
     setSubmitting(false);
   };
 
