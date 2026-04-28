@@ -2,6 +2,17 @@ import { Share2, Check, Copy } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
 
+const SHARE_TITLE = "RotaRápida — Motoboy sob demanda";
+const SHARE_TEXT =
+  "🛵 RotaRápida: motoboys sob demanda para restaurantes, farmácias, pizzarias e padarias. Rápido, simples e sem contrato. Conheça:";
+
+const getShareUrl = () => {
+  if (typeof window === "undefined") return "";
+  // Always share the canonical home URL, regardless of current route
+  const { protocol, host } = window.location;
+  return `${protocol}//${host}/`;
+};
+
 const ShareButton = () => {
   const [status, setStatus] = useState<"idle" | "copied" | "shared">("idle");
 
@@ -9,15 +20,40 @@ const ShareButton = () => {
     window.setTimeout(() => setStatus("idle"), 2000);
   };
 
+  const copyToClipboard = async (text: string) => {
+    // Modern API
+    if (navigator.clipboard && window.isSecureContext) {
+      await navigator.clipboard.writeText(text);
+      return;
+    }
+    // Legacy fallback (older browsers / non-HTTPS)
+    const ta = document.createElement("textarea");
+    ta.value = text;
+    ta.setAttribute("readonly", "");
+    ta.style.position = "fixed";
+    ta.style.opacity = "0";
+    document.body.appendChild(ta);
+    ta.select();
+    const ok = document.execCommand("copy");
+    document.body.removeChild(ta);
+    if (!ok) throw new Error("execCommand copy failed");
+  };
+
   const handleShare = async () => {
-    const shareData = {
-      title: "RotaRápida",
-      text: "Motoboy sob demanda para restaurantes. Rápido, simples e sem contrato.",
-      url: window.location.origin,
+    const url = getShareUrl();
+    const shareData: ShareData = {
+      title: SHARE_TITLE,
+      text: SHARE_TEXT,
+      url,
     };
 
-    // Try native share first (mobile)
-    if (typeof navigator !== "undefined" && navigator.share) {
+    // Native share (mostly mobile)
+    const canNativeShare =
+      typeof navigator !== "undefined" &&
+      typeof navigator.share === "function" &&
+      (!navigator.canShare || navigator.canShare(shareData));
+
+    if (canNativeShare) {
       try {
         await navigator.share(shareData);
         setStatus("shared");
@@ -27,24 +63,24 @@ const ShareButton = () => {
         resetSoon();
         return;
       } catch (err) {
-        // AbortError = user cancelled, stay silent
-        if ((err as DOMException)?.name === "AbortError") return;
-        // Other errors fall through to clipboard fallback
+        if ((err as DOMException)?.name === "AbortError") return; // user cancelled
+        // fall through to clipboard
       }
     }
 
-    // Clipboard fallback (desktop / unsupported browsers)
+    // Desktop / fallback: copy a friendly message + URL
+    const clipboardPayload = `${SHARE_TEXT} ${url}`;
     try {
-      await navigator.clipboard.writeText(shareData.url);
+      await copyToClipboard(clipboardPayload);
       setStatus("copied");
       toast.success("Link copiado!", {
-        description: shareData.url,
+        description: url,
         icon: <Copy size={16} />,
       });
       resetSoon();
     } catch {
       toast.error("Não foi possível copiar", {
-        description: "Copie o link manualmente da barra de endereço.",
+        description: `Copie manualmente: ${url}`,
       });
     }
   };
