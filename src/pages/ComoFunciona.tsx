@@ -16,12 +16,27 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { trackEvent } from "@/lib/analytics";
+import { toast } from "sonner";
+
+const CTA_LABELS: Record<"contratar" | "motoboy", string> = {
+  contratar: "Quero Contratar",
+  motoboy: "Sou Motoboy",
+};
 
 const handleCtaClick = (label: "contratar" | "motoboy", origin: string) => {
   trackEvent("cta_click", {
     label: `${label}:${origin}`,
     page: "/como-funciona",
   });
+
+  // Toast de confirmação apenas para a barra flutuante (mobile)
+  if (origin === "floating_bar") {
+    toast(`Indo para ${CTA_LABELS[label]}`, {
+      duration: 1500,
+      position: "top-center",
+      dismissible: true,
+    });
+  }
 };
 
 const empresaSteps = [
