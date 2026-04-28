@@ -68,23 +68,63 @@ const Home = () => {
       </section>
 
       {/* Footer */}
-      <footer className="border-t border-border py-8">
-        <div className="container text-center text-sm text-muted-foreground space-y-3">
-          <p>© {new Date().getFullYear()} RotaRápida. Logística sob demanda.</p>
-          <nav className="flex items-center justify-center gap-4 flex-wrap text-xs">
-            <Link to="/privacidade" className="hover:text-primary transition-colors">
-              Privacidade
-            </Link>
-            <span aria-hidden="true" className="text-border">•</span>
-            <Link to="/termos" className="hover:text-primary transition-colors">
-              Termos de uso
-            </Link>
-            <span aria-hidden="true" className="text-border">•</span>
-            <Link to="/como-funciona" className="hover:text-primary transition-colors">
-              Como funciona
-            </Link>
-          </nav>
-          <p className="text-xs">Desenvolvido por Uriel da Fonseca Fortunato</p>
+      <footer className="border-t border-border py-8 sm:py-10">
+        <div className="container px-4 max-w-3xl">
+          <div className="flex flex-col items-center gap-5 text-center">
+            {/* Brand + slogan */}
+            <div className="space-y-1">
+              <p className="font-heading text-base sm:text-lg font-bold">
+                <span className="text-gradient">Rota</span>
+                <span className="text-foreground">Rápida</span>
+              </p>
+              <p className="text-xs sm:text-sm text-muted-foreground break-words">
+                Logística sob demanda para restaurantes.
+              </p>
+            </div>
+
+            {/* Nav links */}
+            <nav
+              aria-label="Rodapé"
+              className="flex items-center justify-center gap-x-4 gap-y-2 flex-wrap text-xs sm:text-sm"
+            >
+              <Link
+                to="/privacidade"
+                className="text-muted-foreground hover:text-primary transition-colors"
+              >
+                Privacidade
+              </Link>
+              <span aria-hidden="true" className="text-border">•</span>
+              <Link
+                to="/termos"
+                className="text-muted-foreground hover:text-primary transition-colors"
+              >
+                Termos de uso
+              </Link>
+              <span aria-hidden="true" className="text-border">•</span>
+              <Link
+                to="/como-funciona"
+                className="text-muted-foreground hover:text-primary transition-colors"
+              >
+                Como funciona
+              </Link>
+            </nav>
+
+            {/* Divider */}
+            <div className="w-12 h-px bg-border" aria-hidden="true" />
+
+            {/* Copyright + credits */}
+            <div className="flex flex-col gap-1 text-[11px] sm:text-xs text-muted-foreground">
+              <p className="break-words">
+                © {new Date().getFullYear()} RotaRápida. Todos os direitos reservados.
+              </p>
+              <p className="break-words">
+                Desenvolvido por{" "}
+                <span className="text-foreground font-medium">
+                  Uriel da Fonseca Fortunato
+                </span>
+              </p>
+            </div>
+          </div>
         </div>
       </footer>
     </div>
