@@ -30,6 +30,8 @@ const App = () => (
           <Route path="/motoboy" element={<SouMotoboy />} />
           <Route path="/como-funciona" element={<ComoFunciona />} />
           <Route path="/analytics" element={<Analytics />} />
+          <Route path="/privacidade" element={<Privacidade />} />
+          <Route path="/termos" element={<Termos />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
