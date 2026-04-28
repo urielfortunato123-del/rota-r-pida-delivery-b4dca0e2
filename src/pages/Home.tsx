@@ -67,8 +67,9 @@ const Home = () => {
 
       {/* Footer */}
       <footer className="border-t border-border py-8">
-        <div className="container text-center text-sm text-muted-foreground">
-          © {new Date().getFullYear()} RotaRápida. Logística sob demanda.
+        <div className="container text-center text-sm text-muted-foreground space-y-1">
+          <p>© {new Date().getFullYear()} RotaRápida. Logística sob demanda.</p>
+          <p className="text-xs">Desenvolvido por Uriel da Fonseca Fortunato</p>
         </div>
       </footer>
     </div>
